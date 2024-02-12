@@ -1,0 +1,4 @@
+/.direnv/
+/.envrc
+*.cf
+/lab1/rom/rom_tb
