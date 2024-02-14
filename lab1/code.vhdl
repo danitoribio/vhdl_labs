@@ -28,16 +28,19 @@ begin
             WHEN "10" => f <= 2200;
             WHEN OTHERS => f <= 3900;
             END CASE;
-        END PROCESS;
+    END PROCESS;
 
     --Calculation of the MaxCount
-    MaxCount <= 100000000/(16*f); -- We compute the period of the signal and 
+    process(f)
+        begin
+            MaxCount <= 100000000/(16*f); -- We compute the period of the signal and 
                                   -- divide it by 16 to get the time of each sample
                                   -- and multiply it by the clk frequency to get the number of
                                   -- cycles necessary to get 1/16 of the period of the signal 
-
+    end process;
         
-        process(clk, reset)
+    process(clk, reset)
+        begin
         if reset = '1' then
             counter<=(others => '0');
         elsif clk'event and clk = '1' then
@@ -47,7 +50,7 @@ begin
                 counter <= counter + 1;
                 end if;    
         end if;
-        end process;
+    end process;
             
     EoC <='1' when counter = MaxCount else '0'; --End of Counter
 
