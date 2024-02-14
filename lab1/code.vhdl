@@ -17,7 +17,7 @@ architecture lab1 of GenSen is
     signal MaxCount: integer;    
     signal counter:unsigned(13 downto 0);-- Biggest case when f = 600 so 10417 cycles to count
                                         -- which are 14 bits
-        
+    signal EoC: std_logic;        
 begin
 
     PROCESS(per) --Multiplexer for the frequency
