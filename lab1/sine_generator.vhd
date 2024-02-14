@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use rom_package.all;
 
 
 entity GenSen is
@@ -13,11 +14,12 @@ entity GenSen is
 end GenSen;
 
 architecture lab1 of GenSen is
-    signal f: integer;
-    signal MaxCount: integer;    
-    signal counter:unsigned(13 downto 0);-- Biggest case when f = 600 so 10417 cycles to count
+    signal f: integer range 600 to 3900 :=600; --Frequency of the signal
+    signal MaxCount: integer range 0 to 10417:=0; --Max count for the counter
+    signal counter: unsigned(13 downto 0):= (others => '0');-- Biggest case when f = 600 so 10417 cycles to count
                                         -- which are 14 bits
-    signal EoC: std_logic;        
+    signal EoC: std_logic;  
+    signal address: unsigned(3 downto 0); --Address of the ROM      
 begin
 
     PROCESS(per) --Multiplexer for the frequency
@@ -39,12 +41,12 @@ begin
                                   -- cycles necessary to get 1/16 of the period of the signal 
     end process;
         
-    process(clk, reset)
+    process(clk, reset) --Timer to count the time needed for a sample
         begin
         if reset = '1' then
             counter<=(others => '0');
         elsif clk'event and clk = '1' then
-                if counter = MaxCount then --Used to count 1/16 of the period of the signal
+                if counter >= MaxCount then --Used to count 1/16 of the period of the signal
                 counter<=(others => '0');
                 else
                 counter <= counter + 1;
@@ -52,7 +54,22 @@ begin
         end if;
     end process;
             
-    EoC <='1' when counter = MaxCount else '0'; --End of Counter
+    EoC <='1' when counter >= MaxCount else '0'; --End of Counter
+
+    process(clk,reset) --Counter for the address of the ROM
+        begin
+        if reset = '1' then
+            address<=(others => '0');
+        elsif clk'event and clk = '1' then
+            if EoC = '1' then
+                if address = 15 then --Used to count the 16 samples
+                address<=(others => '0');
+                else
+                address <= address + 1;
+                end if; 
+            end if;   
+        end if;
+    end process;
 
 end lab1;
 
