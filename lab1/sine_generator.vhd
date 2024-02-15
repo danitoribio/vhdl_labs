@@ -1,7 +1,8 @@
 library ieee;
+library work;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use rom_package.all;
+use work.rom_package.all;
 
 
 entity GenSen is
@@ -18,8 +19,13 @@ architecture lab1 of GenSen is
     signal MaxCount: integer range 0 to 10417:=0; --Max count for the counter
     signal counter: unsigned(13 downto 0):= (others => '0');-- Biggest case when f = 600 so 10417 cycles to count
                                         -- which are 14 bits
-    signal EoC: std_logic;  
-    signal address: unsigned(3 downto 0); --Address of the ROM      
+    signal EoC: std_logic;  --End of Counter  
+    component rom is
+        port(
+            address: in unsigned(3 downto 0);
+            data: out signed(7 downto 0)
+        );
+    end component;  
 begin
 
     PROCESS(per) --Multiplexer for the frequency
@@ -71,5 +77,11 @@ begin
         end if;
     end process;
 
+    process(address)
+    begin
+        data <= ROM_CONTENT(to_integer(unsigned(address))); --We get the data from the ROM
+    end process;
+    led <= 127*data; --We multiply the data by 127 to get the led value
+    dac <= 128+led --We add 128 to the led value to get the dac value
 end lab1;
 

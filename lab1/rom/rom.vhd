@@ -2,14 +2,14 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 package rom_package is
-component rom is
-  port (
-    time_instance : in unsigned(3 downto 0) := (others => '0'); -- time instant to select the sine (16 different times)
-    sin_value: out signed(7 downto 0) := (others => '0')-- value of the sine wave at each time instant
-  );
-end rom;
+--component rom is
+--  port (
+--    time_instance : in unsigned(3 downto 0) := (others => '0'); -- time instant to select the sine (16 different times)
+--    sin_value: out signed(7 downto 0) := (others => '0')-- value of the sine wave at each time instant
+--  );
+--end rom;
 
-architecture behaviour of rom is
+--architecture behaviour of rom is
   type rom_type is array (0 to 15) of signed (7 downto 0);
 
   signal rom_values : rom_type := (
@@ -30,10 +30,10 @@ architecture behaviour of rom is
     to_signed(-89, 8),
     to_signed(-48, 8)
   );
-begin
-  sin_value <= rom_values(to_integer(time_instance));
+--begin
+--  sin_value <= rom_values(to_integer(time_instance));
 
-end behaviour;
+--end behaviour;
 end rom_package;
 -- Code to get the values for the sign in Python
 -- import math
