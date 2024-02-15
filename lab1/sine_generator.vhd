@@ -83,7 +83,7 @@ begin
                 end if; 
             end if;   
         end if;
-    end process;
+    end process; 
 
     process(rom_address)
     begin
