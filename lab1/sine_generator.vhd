@@ -85,9 +85,9 @@ begin
         end if;
     end process;
 
-    process(address)
+    process(rom_address)
     begin
-        rom_data <= ROM_CONTENT(to_integer(unsigned(rom_address))); --We get the data from the ROM
+        rom_data <= rom_values(to_integer(unsigned(rom_address))); --We get the data from the ROM
     end process;
     led <= 127*rom_data; --We multiply the data by 127 to get the led value
     dac <= 128+led --We add 128 to the led value to get the dac value
