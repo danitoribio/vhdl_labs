@@ -20,6 +20,7 @@ architecture lab1 of GenSen is
     signal counter: unsigned(13 downto 0):= (others => '0');-- Biggest case when f = 600 so 10417 cycles to count
                                         -- which are 14 bits
     signal EoC: std_logic;  --End of Counter  
+    signal led_aux: signed(7 downto 0); --Auxiliar signal for the led, as led is declared as output we need a signal to compute the dac
     component rom is
         port(
             address: in unsigned(3 downto 0);
@@ -90,6 +91,7 @@ begin
         rom_data <= rom_values(to_integer(unsigned(rom_address))); --We get the data from the ROM
     end process;
     led <= 127*rom_data; --We multiply the data by 127 to get the led value
-    dac <= 128+led --We add 128 to the led value to get the dac value
+    led_aux <= 127*rom_data; --Auxiliar signal to compute the dac
+    dac <= 128+led_aux; --We add 128 to the led value to get the dac value
 end lab1;
 
