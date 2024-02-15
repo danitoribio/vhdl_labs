@@ -26,7 +26,15 @@ architecture lab1 of GenSen is
             data: out signed(7 downto 0)
         );
     end component;  
+    signal rom_address : unsigned(3 downto 0);
+    signal rom_data    : signed(7 downto 0);
 begin
+    --ROM
+    ROM_inst : rom
+        port map(
+            address => rom_address,
+            data => rom_data
+        );
 
     PROCESS(per) --Multiplexer for the frequency
         BEGIN
@@ -65,13 +73,13 @@ begin
     process(clk,reset) --Counter for the address of the ROM
         begin
         if reset = '1' then
-            address<=(others => '0');
+            rom_address<=(others => '0');
         elsif clk'event and clk = '1' then
             if EoC = '1' then
-                if address = 15 then --Used to count the 16 samples
-                address<=(others => '0');
+                if rom_address = 15 then --Used to count the 16 samples
+                    rom_address<=(others => '0');
                 else
-                address <= address + 1;
+                    rom_address <= rom_address + 1;
                 end if; 
             end if;   
         end if;
@@ -79,9 +87,9 @@ begin
 
     process(address)
     begin
-        data <= ROM_CONTENT(to_integer(unsigned(address))); --We get the data from the ROM
+        rom_data <= ROM_CONTENT(to_integer(unsigned(rom_address))); --We get the data from the ROM
     end process;
-    led <= 127*data; --We multiply the data by 127 to get the led value
+    led <= 127*rom_data; --We multiply the data by 127 to get the led value
     dac <= 128+led --We add 128 to the led value to get the dac value
 end lab1;
 
