@@ -92,6 +92,6 @@ begin
     end process;
     led <= 127*rom_data; --We multiply the data by 127 to get the led value
     led_aux <= 127*rom_data; --Auxiliar signal to compute the dac
-    dac <= 128+led_aux; --We add 128 to the led value to get the dac value
+    dac <= to_unsigned(128, 8) + unsigned(led_aux); --We add 128 to the led value to get the dac value
 end lab1;
 
