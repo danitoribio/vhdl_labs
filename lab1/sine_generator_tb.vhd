@@ -63,7 +63,7 @@ begin
         for i in 0 to 3 loop
           wait for CLOCK_PERIOD;
           per_tb <= std_logic_vector(to_unsigned(i, per_tb'length));  -- Increase per by 1
-          wait for SIMULATION_PERIOD / 3;
+          wait for SIMULATION_PERIOD / 4;
           report "per_tb = " & integer'image(to_integer(unsigned(per_tb)));
 
         end loop;
