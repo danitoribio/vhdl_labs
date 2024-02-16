@@ -7,6 +7,7 @@ end entity sine_generator_tb;
 
 architecture sim of sine_generator_tb is
     constant CLOCK_PERIOD : time := 10 ns; -- Clock period (100MHz)
+    constant SIMULATION_PERIOD : time := 10 ms;
     
     signal Clk_tb   : std_logic := '0';    -- Test bench clock signal
     signal Reset_tb : std_logic := '0';    -- Test bench reset signal
@@ -39,10 +40,11 @@ begin
     -- Clock generation process
     clk_process: process
     begin
-        while now < 1000 ns loop -- Simulate for 10 us
+        while now < SIMULATION_PERIOD loop -- Simulate for 10 us
             Clk_tb <= '0';
             wait for CLOCK_PERIOD / 2;
             Clk_tb <= '1';
+
             wait for CLOCK_PERIOD / 2;
         end loop;
         wait;
@@ -59,10 +61,10 @@ begin
         
         -- Test cases with different values for per
         for i in 0 to 3 loop
-          per_tb <= std_logic_vector(to_unsigned(i, per_tb'length)); -- Increase per by 1
           wait for CLOCK_PERIOD;
           per_tb <= std_logic_vector(to_unsigned(i, per_tb'length)); -- Increase per by 1
-          wait for 100 ns;
+          wait for SIMULATION_PERIOD / 3;
+          report "per_tb = " &  integer'image(to_integer(unsigned(per_tb)));
 
         end loop;
         wait for 100 ns; -- Wait some time
