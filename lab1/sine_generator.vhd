@@ -3,11 +3,11 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity GenSen is
-  port (Clk : in  std_logic;          --100MHz so we can count in 10ns
-        Reset     : in  std_logic;
-        per       : in  std_logic_vector(1 downto 0);
-        led       : out signed(7 downto 0);
-        dac       : out unsigned(7 downto 0)
+  port (Clk   : in  std_logic;          --100MHz so we can count in 10ns
+        Reset : in  std_logic;
+        per   : in  std_logic_vector(1 downto 0);
+        led   : out signed(7 downto 0);
+        dac   : out unsigned(7 downto 0)
         );
 end GenSen;
 
@@ -15,10 +15,10 @@ architecture lab1 of GenSen is
   signal f           : integer range 600 to 3900 := 600;  -- frequency of the signal
   signal MaxCount    : integer range 0 to 10417  := 0;  -- max count for the counter to count the frequency
   signal counter     : integer range 0 to 10417  := 0;  -- biggest case when f = 600 so 10417 cycles 
-  signal rom_address : unsigned(3 downto 0);
-  signal rom_data    : signed(7 downto 0);
+  signal rom_address : unsigned(3 downto 0);            -- address of the ROM
+  signal rom_data    : signed(7 downto 0);              -- data of the ROM
 
-  signal EoC : std_logic;             --End of Counter  
+  signal EoC : std_logic;  --End of Counter to change to the next address of the ROM
 
   component rom is
     port (
@@ -28,7 +28,7 @@ architecture lab1 of GenSen is
   end component;
 
 begin
-  --ROM
+  --ROM instance
   ROM_inst : rom
     port map(
       time_instance => rom_address,
@@ -38,7 +38,7 @@ begin
   -- Multiplexer to select the frequency
   PROCESS(per)
   BEGIN
-    CASE per IS
+    CASE per is  -- select the frequency of the signal based on the input per
       WHEN "00"   => f <= 600;
       WHEN "01"   => f <= 1000;
       WHEN "10"   => f <= 2200;
@@ -49,33 +49,36 @@ begin
   --Calculation of the MaxCount for the given f
   process(f)
   begin
-    MaxCount <= 100000000/(16*f);  -- We compute the period of the signal and 
+    MaxCount <= 100000000/(16*f);
+  -- We compute the period of the signal and 
   -- divide it by 16 to get the time of each sample
   -- and multiply it by the clk frequency to get the number of
   -- cycles necessary to get 1/16 of the period of the signal 
   end process;
 
-  process(clk, reset)  --Timer to count the time needed for a sample
+  --Timer to count the time needed for a sample
+  process(clk, reset)
   begin
     if reset = '1' then
       counter <= 0;
     elsif clk'event and clk = '1' then
       if counter >= MaxCount then  --Used to count 1/16 of the period of the signal
         counter <= 0;
-
       else
         counter <= counter + 1;
       end if;
     end if;
   end process;
 
-  EoC <= '1' when counter >= MaxCount else '0';  --End of Counter
+  --End of Counter to change to the next address of the ROM 
+  EoC <= '1' when counter >= MaxCount else '0';
 
-  process(clk, reset)                 --Counter for the address of the ROM
+  process(clk, reset)                    --Counter for the address of the ROM
   begin
     if reset = '1' then
       rom_address <= (others => '0');
     elsif clk'event and clk = '1' then
+      --We change the address of the ROM when the counter is at the end
       if EoC = '1' then
         rom_address <= rom_address + 1;  -- automatic to 0 due to overflow
       end if;
@@ -83,7 +86,7 @@ begin
     end if;
   end process;
 
-  led <= rom_data;
+  led <= rom_data;                      --copy the data of the ROM to the led
   dac <= to_unsigned(128, 8) + unsigned(rom_data);  --We add 128 to the led value to get the dac value
 end lab1;
 
