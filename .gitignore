@@ -3,3 +3,4 @@
 *.cf
 /lab1/rom/rom_tb
 /lab1/sine_generator_tb
+*.ghw

@@ -14,6 +14,7 @@
       mkShell {
         packages = [
           ghdl-llvm
+          gtkwave
         ];
       };
   };
