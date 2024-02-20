@@ -12,7 +12,6 @@ entity GenSen is
 end GenSen;
 
 architecture lab1 of GenSen is
-  signal f           : integer range 600 to 3900 := 600;  -- frequency of the signal
   signal MaxCount    : integer range 0 to 10417  := 0;  -- max count for the counter to count the frequency
   signal counter     : integer range 0 to 10417  := 0;  -- biggest case when f = 600 so 10417 cycles 
   signal rom_address : unsigned(3 downto 0);            -- address of the ROM
@@ -35,26 +34,20 @@ begin
       sin_value     => rom_data
       );
 
-  -- Multiplexer to select the frequency
-  PROCESS(per)
-  BEGIN
-    CASE per is  -- select the frequency of the signal based on the input per
-      WHEN "00"   => f <= 600;
-      WHEN "01"   => f <= 1000;
-      WHEN "10"   => f <= 2200;
-      WHEN OTHERS => f <= 3900;
-    END CASE;
-  END PROCESS;
-
-  --Calculation of the MaxCount for the given f
-  process(f)
-  begin
-    MaxCount <= 100000000/(16*f);
+  -- Multiplexer to select the MaxCount
   -- We compute the period of the signal and 
   -- divide it by 16 to get the time of each sample
   -- and multiply it by the clk frequency to get the number of
   -- cycles necessary to get 1/16 of the period of the signal 
-  end process;
+  PROCESS(per)
+  BEGIN
+    CASE per is  -- select the frequency of the signal based on the input per
+      WHEN "00"   => MaxCount <= 10416;
+      WHEN "01"   => MaxCount <= 6250;
+      WHEN "10"   => MaxCount <= 2840;
+      WHEN OTHERS => MaxCount <= 1602;
+    END CASE;
+  END PROCESS;
 
   --Timer to count the time needed for a sample
   process(clk, reset)
