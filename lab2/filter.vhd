@@ -26,8 +26,9 @@ entity FILTER is
 
 architecture lab2 of FILTER is
 
+
 begin
--- The computed with matlab are the following:
+-- The computed coefficients with matlab are the followings:
 -- -0.000000000000001485990817575209568847452
 --  0.009713826664505794197812527102087187814
 --  0.00000000000000143474975490020232873442 
