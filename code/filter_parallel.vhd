@@ -4,6 +4,21 @@ use ieee.numeric_std.all;
 
 --Coefficients of the FIR filter, in our case of order 12 so 13 coefficients
 entity filter_parallel is
+  generic (a0  : integer := 0;
+           a1  : integer := 2;
+           a2  : integer := 0;
+           a3  : integer := -15;
+           a4  : integer := 0;
+           a5  : integer := 76;
+           a6  : integer := 128;
+           a7  : integer := 76;
+           a8  : integer := 0;
+           a9  : integer := -15;
+           a10 : integer := 0;
+           a11 : integer := 2;
+           a12 : integer := 0
+           );
+
   port (Clk     : in  std_logic;        --100MHz so we can count in 10ns
         Reset   : in  std_logic;
         DataIn  : in  signed (7 downto 0);
@@ -13,11 +28,14 @@ entity filter_parallel is
 end filter_parallel;
 
 architecture behavioural of filter_parallel is
-  constant N_COEFFICIENTS : integer             := 12;
+  constant N_COEFFICIENTS : integer := 12;
   type shift_register_type is array (0 to N_COEFFICIENTS) of integer range -127 to 128;
-  constant COEFFICIENTS   : shift_register_type := (0, 2, 0, -15, 0, 76, 128, 76, 0, -15, 0, 2, 0);
 
   signal shift_registers : shift_register_type;
+
+  constant COEFFICIENTS : shift_register_type := (
+    a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12
+    );
 
   signal output : signed (15 downto 0);
 
@@ -30,19 +48,23 @@ begin
         shift_registers(i) <= 0;
       end loop;
       output <= (others => '0');
+
     elsif rising_edge(clk) then
       if enable = '1' then
         -- shift data in registers
-        for i in N_COEFFICIENTS downto 1 loop
-          shift_registers(i) <= shift_registers(i - 1);
-        end loop;
+        -- for i in N_COEFFICIENTS downto 1 loop
+        --   shift_registers(i) <= shift_registers(i - 1);
+        -- end loop;
+        --
         shift_registers(0) <= to_integer(DataIn);
+        shift_registers(1) <= shift_registers(0);
+        shift_registers(2) <= shift_registers(1);
 
         -- calculate outpu
-        output <= (others => '0');
-        for i in 0 to N_COEFFICIENTS loop
-          output <= output + COEFFICIENTS(i) * shift_registers(i);
-        end loop;
+        -- output <= (others => '0');
+        -- for i in 0 to N_COEFFICIENTS loop
+        --   output <= output + COEFFICIENTS(i) * shift_registers(i);
+        -- end loop;
       end if;
     end if;
   end process;
