@@ -76,12 +76,12 @@ process(Clk,Reset)
     end if; 
   end process; 
   
-  temp(0) <=           A(0)*aX(0); 
-  temp(1) <= temp(0) + A(1)*aX(1);     
-  --temp(2) <= temp(1) + A(2)*aX(2);     
-  
-  temp(3) <= temp(2) + B(1)*aY(1);         
-  temp(4) <= temp(3) + B(2)*aY(2);  
-  combY   <= temp(4)(17 downto 8); 
+  temp(0) <= a1*aX(1); 
+  temp(1) <= temp(0) + a3*aX(3);         
+  temp(2) <= temp(1) + a5*aX(5);
+  temp(4) <= temp(3) + a7*aX(8);
+  temp(5) <= temp(4) + a9*aX(10);
+  temp(6) <= temp(5) + a11*aX(12);
+  DataOut  <= temp(6)(15 downto 7); 
 
 end lab2;
