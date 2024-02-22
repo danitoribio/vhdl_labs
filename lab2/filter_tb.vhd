@@ -35,7 +35,7 @@ architecture tb_arch of FILTER_TestBench is
     -- Signals for the test bench
     signal Reset   : STD_LOGIC := '0';
     signal DataIn  : SIGNED (7 downto 0) := (others => '0');
-    signal Enable  : STD_LOGIC := '0';
+    signal Enable  : STD_LOGIC := '1';
     signal DataOut : SIGNED (7 downto 0);
 
 begin
@@ -68,7 +68,7 @@ begin
     -- Clock process definition
     Clk_Process: process
     begin
-        while now < 5000 ns loop  -- Simulate for 5000 ns
+        while now < 7 us loop  -- Simulate for 5000 ns
             Clk <= '0';
             wait for Clk_period / 2;
             Clk <= '1';
@@ -86,8 +86,38 @@ begin
 
         -- Add your test cases here
         -- Example:
-        -- Enable <= '1';
-        -- DataIn <= to_signed(10, DataIn'length); -- Sample input
+        DataIn <= to_signed(0, 8); -- Sample input
+        wait for 10 us;
+        DataIn <= to_signed(48, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(89, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(117, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(127, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(117, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(89, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(48, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(0, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(-48, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(-89, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(-117, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(-127, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(-117, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(-89, 8);
+        wait for 10 ns;
+        DataIn <= to_signed(-48, 8);
+        
         -- wait for 10 ns;
         -- assert DataOut = expected_output_variable report "Test failed!" severity error;
 

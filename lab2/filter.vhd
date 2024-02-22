@@ -29,7 +29,7 @@ end FILTER;
 architecture lab2 of FILTER is
 type data1 is array (0 to 12) of signed (7 downto 0); 
 signal aX : data1; -- The flip flops that store the input data, x(n), x(n-1)...
-type data2 is array (0 to 4) of signed (15 downto 0); 
+type data2 is array (0 to 6) of signed (15 downto 0); 
 signal temp : data2; -- The values between each multiplication and addition, where temp(3) is stored in the pipeline
 begin
 -- The computed coefficients with matlab are the followings:
@@ -82,6 +82,6 @@ process(Clk,Reset)
   temp(4) <= temp(3) + a7*aX(8);
   temp(5) <= temp(4) + a9*aX(10);
   temp(6) <= temp(5) + a11*aX(12);
-  DataOut  <= temp(6)(15 downto 7); 
+  DataOut  <= temp(6)(15 downto 8); 
 
 end lab2;
