@@ -22,7 +22,6 @@ compile: $(VHDL_FILES)
 run:
 	$(GHDL_CMD) -e $(GHDL_FLAGS) $(TB_ENTITY)
 	$(GHDL_CMD) -r $(GHDL_FLAGS) $(TB_ENTITY) $(GHDL_RUN_FLAGS) $(SIM_TIME)
-	$(GTKWAVE_CMD) $(WAVE_FILE)
 
 # Target: clean (remove compiled files and waves)
 clean:
