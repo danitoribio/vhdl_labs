@@ -48,23 +48,22 @@ begin
         shift_registers(i) <= 0;
       end loop;
       output <= (others => '0');
-
     elsif rising_edge(clk) then
       if enable = '1' then
         -- shift data in registers
-        -- for i in N_COEFFICIENTS downto 1 loop
-        --   shift_registers(i) <= shift_registers(i - 1);
-        -- end loop;
-        --
+        -- FIXME
         shift_registers(0) <= to_integer(DataIn);
-        shift_registers(1) <= shift_registers(0);
-        shift_registers(2) <= shift_registers(1);
+        for i in 1 to N_COEFFICIENTS loop
+          shift_registers(i) <= shift_registers(i - 1);
+          report "shift_registers(" & integer'image(i) & ") = " & integer'image(shift_registers(i));
+        end loop;
 
-        -- calculate outpu
-        -- output <= (others => '0');
-        -- for i in 0 to N_COEFFICIENTS loop
-        --   output <= output + COEFFICIENTS(i) * shift_registers(i);
-        -- end loop;
+        -- calculate output
+        -- FIXME
+        output <= (others => '0');
+        for i in 0 to N_COEFFICIENTS loop
+          output <= output + COEFFICIENTS(i) * shift_registers(i);
+        end loop;
       end if;
     end if;
   end process;
