@@ -62,19 +62,19 @@ begin
   --Filter instance
   filter_parallel_inst : filter_parallel
     generic map (
-      a0  => 0,
-      a1  => 2,
-      a2  => 0,
-      a3  => -15,
-      a4  => 0,
-      a5  => 76,
-      a6  => 128,
-      a7  => 76,
-      a8  => 0,
-      a9  => -15,
-      a10 => 0,
-      a11 => 2,
-      a12 => 0
+      a0  => -14,
+      a1  => 0,
+      a2  => 22,
+      a3  => 47,
+      a4  => 70,
+      a5  => 86,
+      a6  => 92,
+      a7  => 86,
+      a8  => 70,
+      a9  => 47,
+      a10 => 22,
+      a11 => 0,
+      a12 => -14
       )
     port map(
       Clk     => clk,
