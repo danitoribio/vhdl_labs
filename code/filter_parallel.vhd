@@ -130,6 +130,6 @@ end behavioural;
 -- Our input and output are 8 bits signed numbers so the biggest absolute value is 2^7 = 128,
 -- our biggest coefficient is 0.180191569250188837747472803130222018808,
 -- so 0.180191569250188837747472803130222018808*2^k < 128; k<log2(128/0.180191569250188837747472803130222018808);
--- k = 9 bits.
--- After multiplying by 2^9 we get the following coefficients (we will divide by 2^9 in the end by taking the 9 MSB of the result):
--- -14, 0, 22, 47, 70, 86, 92, 86, 70, 47, 22, 0, -14
+-- k = 8 bits.
+-- After multiplying by 2^8 we get the following coefficients (we will divide by 2^8 in the end by taking the 9 MSB of the result):
+-- -7, 0, 11, 23, 35, 43, 46, 43, 35, 23, 11, 0, -7
