@@ -43,7 +43,7 @@ begin
       dac   => open
       );
 
-  filter_parallel_inst : filter_parallel
+  filter_parallel_inst : filter_parallel -- Aqui hay que hacer generic map y quitar los valores default porque en el statement del lab nos lo dan sin valores default
     port map(
       Clk     => clk,
       Reset   => reset,
@@ -52,7 +52,7 @@ begin
       DataOut => output
       );
 
-  led <= output;
+  led <= output; -- El led creo q sigue teniendo el valor del lab1
   dac <= to_unsigned(128, 8) + unsigned(output);  --We add 128 to the led value to get the dac value
 
 end behavioural;

@@ -45,7 +45,7 @@ begin
     if Reset = '1' then
       -- temp(3) <= (others => '0');       -- Pipeline, see diagram
       for i in 0 to N_COEFFICIENTS loop
-        shift_registers(i) <= 0;
+        shift_registers(i) <= 0;  -- Esto se puede cambiar para no usar un for loop (mirar el archivo del filtro de clase)
       end loop;
       output <= (others => '0');
     elsif rising_edge(clk) then
@@ -54,14 +54,14 @@ begin
         -- FIXME
         shift_registers(0) <= to_integer(DataIn);
         for i in 1 to N_COEFFICIENTS loop
-          shift_registers(i) <= shift_registers(i - 1);
+          shift_registers(i) <= shift_registers(i - 1); -- Esto se puede cambiar para no usar un for loop (mirar el archivo del filtro de clase)
           report "shift_registers(" & integer'image(i) & ") = " & integer'image(shift_registers(i));
         end loop;
 
         -- calculate output
         -- FIXME
         output <= (others => '0');
-        for i in 0 to N_COEFFICIENTS loop
+        for i in 0 to N_COEFFICIENTS loop -- Esto se puede cambiar para no usar un for loop (mirar el archivo del filtro de clase)
           output <= output + COEFFICIENTS(i) * shift_registers(i);
         end loop;
       end if;
