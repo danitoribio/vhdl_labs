@@ -20,7 +20,7 @@ architecture sim of sine_generator_tb is
   signal led_tb   : signed(7 downto 0);    -- Test bench output led signal
   signal dac_tb   : unsigned(7 downto 0);  -- Test bench output dac signal
 
-  component GenSen
+  component sine_generator is
     port (
       Clk   : in  std_logic;
       Reset : in  std_logic;
@@ -33,7 +33,7 @@ architecture sim of sine_generator_tb is
 begin
 
   -- Instantiate the unit under test
-  UUT : GenSen
+  sine_generator_inst : sine_generator
     port map (
       Clk   => Clk_tb,
       Reset => Reset_tb,
@@ -63,7 +63,7 @@ begin
     Reset_tb <= '0';
     wait for CLOCK_PERIOD;
 
-    -- Test cases with different values for per 
+    -- Test cases with different values for per
     for i in 0 to (N_FREQUENCIES - 1) loop
       per_tb <= std_logic_vector(to_unsigned(i, per_tb'length));  -- Increase per by 1
       wait for WAIT_ARRAY(i);  -- Wait for the given period for the specific frequency

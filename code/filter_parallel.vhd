@@ -4,19 +4,19 @@ use ieee.numeric_std.all;
 
 --Coefficients of the FIR filter, in our case of order 12 so 13 coefficients
 entity filter_parallel is
-  generic (a0  : integer := 0;
-           a1  : integer := 2;
-           a2  : integer := 0;
-           a3  : integer := -15;
-           a4  : integer := 0;
-           a5  : integer := 76;
-           a6  : integer := 128;
-           a7  : integer := 76;
-           a8  : integer := 0;
-           a9  : integer := -15;
-           a10 : integer := 0;
-           a11 : integer := 2;
-           a12 : integer := 0
+  generic (a0  : integer;
+           a1  : integer;
+           a2  : integer;
+           a3  : integer;
+           a4  : integer;
+           a5  : integer;
+           a6  : integer;
+           a7  : integer;
+           a8  : integer;
+           a9  : integer;
+           a10 : integer;
+           a11 : integer;
+           a12 : integer
            );
 
   port (Clk     : in  std_logic;        --100MHz so we can count in 10ns
@@ -29,13 +29,28 @@ end filter_parallel;
 
 architecture behavioural of filter_parallel is
   constant N_COEFFICIENTS : integer := 12;
-  type shift_register_type is array (0 to N_COEFFICIENTS) of integer range -127 to 128;
 
-  signal shift_registers : shift_register_type;
+  type shift_register_type is array (0 to N_COEFFICIENTS) of signed (7 downto 0);
+  signal shift_registers : shift_register_type := (others => (others => '0'));
 
-  constant COEFFICIENTS : shift_register_type := (
-    a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12
-    );
+  type temp_type is array (0 to N_COEFFICIENTS) of signed (15 downto 0);
+  signal temp_registers : temp_type := (others => (others => '0'));
+
+  -- constant COEFFICIENTS : temp_type := (
+  --   to_signed(a0, 15),
+  --   to_signed(a1, 15),
+  --   to_signed(a2, 15),
+  --   to_signed(a3, 15),
+  --   to_signed(a4, 15),
+  --   to_signed(a5, 15),
+  --   to_signed(a6, 15),
+  --   to_signed(a7, 15),
+  --   to_signed(a8, 15),
+  --   to_signed(a9, 15),
+  --   to_signed(a10, 15),
+  --   to_signed(a11, 15),
+  --   to_signed(a12, 15)
+  --   );
 
   signal output : signed (15 downto 0);
 
@@ -44,31 +59,29 @@ begin
   begin
     if Reset = '1' then
       -- temp(3) <= (others => '0');       -- Pipeline, see diagram
-      for i in 0 to N_COEFFICIENTS loop
-        shift_registers(i) <= 0;  -- Esto se puede cambiar para no usar un for loop (mirar el archivo del filtro de clase)
-      end loop;
+      shift_registers <= (others => (others => '0'));
+      temp_registers <= (others => (others => '0'));
       output <= (others => '0');
     elsif rising_edge(clk) then
       if enable = '1' then
         -- shift data in registers
         -- FIXME
-        shift_registers(0) <= to_integer(DataIn);
+        shift_registers(0) <= DataIn;
         for i in 1 to N_COEFFICIENTS loop
-          shift_registers(i) <= shift_registers(i - 1); -- Esto se puede cambiar para no usar un for loop (mirar el archivo del filtro de clase)
-          report "shift_registers(" & integer'image(i) & ") = " & integer'image(shift_registers(i));
+          shift_registers(i) <= shift_registers(i-1);
         end loop;
 
         -- calculate output
         -- FIXME
-        output <= (others => '0');
-        for i in 0 to N_COEFFICIENTS loop -- Esto se puede cambiar para no usar un for loop (mirar el archivo del filtro de clase)
-          output <= output + COEFFICIENTS(i) * shift_registers(i);
-        end loop;
+        -- output <= (others => '0');
+        -- for i in 0 to N_COEFFICIENTS loop -- Esto se puede cambiar para no usar un for loop (mirar el archivo del filtro de clase)
+        --   output <= output + COEFFICIENTS(i) * shift_registers(i);
+        -- end loop;
       end if;
     end if;
   end process;
 
-  DataOut <= output(15 downto 8);
+  -- DataOut <= output(15 downto 8);
 
 end behavioural;
 

@@ -5,3 +5,4 @@
 /lab1/sine_generator_tb
 *.ghw
 /code/main_tb
+/code/sine_generator_tb
