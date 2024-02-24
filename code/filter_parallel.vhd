@@ -99,8 +99,6 @@ begin
 
   DataOut <= temp_registers(12)((N_DIVISION + N_BITS_DATA) downto (N_DIVISION + 1));
 
-  -- DataOut <= output(15 downto 8);
-
 end behavioural;
 
 -- The computed coefficients with matlab are the followings:
