@@ -31,7 +31,7 @@ architecture behavioural of filter_parallel is
   constant N_COEFFICIENTS : integer := 12;
   constant N_BITS_DATA : integer := 8;
   constant N_BITS_TEMP: integer:= 16;
-  constant N_DIVISION: integer := 8; -- 2**N_DIVISION to divide the filter
+  constant N_DIVISION: integer := 9; -- 2**N_DIVISION to divide the filter
 
   type shift_register_type is array (0 to N_COEFFICIENTS) of signed ((N_BITS_DATA - 1) downto 0);
   signal shift_registers : shift_register_type := (others => (others => '0'));
@@ -118,6 +118,6 @@ end behavioural;
 -- Our input and output are 8 bits signed numbers so the biggest absolute value is 2^7 = 128,
 -- our biggest coefficient is 0.180191569250188837747472803130222018808,
 -- so 0.180191569250188837747472803130222018808*2^k < 128; k<log2(128/0.180191569250188837747472803130222018808);
--- k = 8 bits.
--- After multiplying by 2^8 we get the following coefficients (we will divide by 2^8 in the end by taking the 9 MSB of the result):
--- -7, 0, 11, 23, 35, 43, 46, 43, 35, 23, 11, 0, -7
+-- k = 9 bits.
+-- After multiplying by 2^9 we get the following coefficients (we will divide by 2^9 in the end by taking the 9 MSB of the result):
+-- -14, 0, 22, 47, 70, 86, 92, 86, 70, 47, 22, 0, -14
