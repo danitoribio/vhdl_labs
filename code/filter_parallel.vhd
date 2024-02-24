@@ -83,21 +83,21 @@ begin
     end if;
   end process;
 
-  temp_registers(0)  <= resize(resize(shift_registers(0) * COEFFICIENTS(0), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(1)  <= resize(temp_registers(0) + resize(shift_registers(1) * COEFFICIENTS(1), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(2)  <= resize(temp_registers(1) + resize(shift_registers(2) * COEFFICIENTS(2), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(3)  <= resize(temp_registers(2) + resize(shift_registers(3) * COEFFICIENTS(3), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(4)  <= resize(temp_registers(3) + resize(shift_registers(4) * COEFFICIENTS(4), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(5)  <= resize(temp_registers(4) + resize(shift_registers(5) * COEFFICIENTS(5), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(6)  <= resize(temp_registers(5) + resize(shift_registers(6) * COEFFICIENTS(6), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(7)  <= resize(temp_registers(6) + resize(shift_registers(7) * COEFFICIENTS(7), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(8)  <= resize(temp_registers(7) + resize(shift_registers(8) * COEFFICIENTS(8), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(9)  <= resize(temp_registers(8) + resize(shift_registers(9) * COEFFICIENTS(9), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(10) <= resize(temp_registers(9) + resize(shift_registers(10) * COEFFICIENTS(10), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(11) <= resize(temp_registers(10) + resize(shift_registers(11) * COEFFICIENTS(11), N_BITS_TEMP), N_BITS_TEMP);
-  temp_registers(12) <= resize(temp_registers(11) + resize(shift_registers(12) * COEFFICIENTS(12), N_BITS_TEMP), N_BITS_TEMP);
+  temp_registers(0)  <= shift_registers(0) * COEFFICIENTS(0);
+  temp_registers(1)  <= temp_registers(0) + shift_registers(1) * COEFFICIENTS(1);
+  temp_registers(2)  <= temp_registers(1) + shift_registers(2) * COEFFICIENTS(2);
+  temp_registers(3)  <= temp_registers(2) + shift_registers(3) * COEFFICIENTS(3);
+  temp_registers(4)  <= temp_registers(3) + shift_registers(4) * COEFFICIENTS(4);
+  temp_registers(5)  <= temp_registers(4) + shift_registers(5) * COEFFICIENTS(5);
+  temp_registers(6)  <= temp_registers(5) + shift_registers(6) * COEFFICIENTS(6);
+  temp_registers(7)  <= temp_registers(6) + shift_registers(7) * COEFFICIENTS(7);
+  temp_registers(8)  <= temp_registers(7) + shift_registers(8) * COEFFICIENTS(8);
+  temp_registers(9)  <= temp_registers(8) + shift_registers(9) * COEFFICIENTS(9);
+  temp_registers(10) <= temp_registers(9) + shift_registers(10) * COEFFICIENTS(10);
+  temp_registers(11) <= temp_registers(10) + shift_registers(11) * COEFFICIENTS(11);
+  temp_registers(12) <= temp_registers(11) + shift_registers(12) * COEFFICIENTS(12);
 
-  DataOut <= temp_registers(12)((N_DIVISION + N_BITS_DATA - 1) downto (N_DIVISION ));
+  DataOut <= temp_registers(12)((N_DIVISION + N_BITS_DATA - 1) downto (N_DIVISION));
 
 end behavioural;
 

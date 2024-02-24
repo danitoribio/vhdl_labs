@@ -14,7 +14,12 @@ end main;
 
 architecture behavioural of main is
   signal sine   : signed (7 downto 0);
-  signal output : signed (7 downto 0);
+  signal sine_filtered : signed (7 downto 0);
+
+  constant MAX_COUNT : integer := 9999; -- f = 10kHz for the sampling.
+  signal counter : integer range 0 to MAX_COUNT := 0;
+
+  signal EoC_sampling : std_logic;
 
   component sine_generator is
     port (Clk   : in  std_logic;        --100MHz so we can count in 10ns
@@ -77,11 +82,28 @@ begin
       Clk     => clk,
       Reset   => reset,
       DataIn  => sine,
-      Enable  => '1',
-      DataOut => output
+      Enable  => EoC_sampling,
+      DataOut => sine_filtered
       );
 
-  led <= output;  -- El led creo q sigue teniendo el valor del lab1
-  dac <= to_unsigned(128, 8) + unsigned(output);  --We add 128 to the led value to get the dac value
+  --Timer to count the time needed for sampling the sine before the filter
+  process(clk, reset)
+  begin
+    if reset = '1' then
+      counter <= 0;
+    elsif clk'event and clk = '1' then
+      if counter = MAX_COUNT then
+        counter <= 0;
+      else
+        counter <= counter + 1;
+      end if;
+    end if;
+  end process;
+
+  --End of Counter to sample the sine for the filter
+  EoC_sampling <= '1' when counter = MAX_COUNT else '0';
+
+  led <= sine_filtered;
+  dac <= to_unsigned(128, 8) + unsigned(sine_filtered);  --We add 128 to the led value to get the dac value
 
 end behavioural;
