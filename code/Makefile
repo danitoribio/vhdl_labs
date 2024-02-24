@@ -1,8 +1,8 @@
 # Makefile for compiling and running main_tb
 
 # Define variables
-VHDL_FILES := filter_parallel.vhd rom.vhd sine_generator.vhd sine_generator_tb.vhd
-TB_ENTITY := sine_generator_tb
+VHDL_FILES := filter_parallel.vhd main.vhd main_tb.vhd rom.vhd sine_generator.vhd sine_generator_tb.vhd
+TB_ENTITY := main_tb
 GHDL_CMD := ghdl
 GTKWAVE_CMD := gtkwave
 GHDL_FLAGS := --std=08
