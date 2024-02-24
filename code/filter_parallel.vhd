@@ -59,7 +59,6 @@ begin
   begin
     if Reset = '1' then
       shift_registers <= (others => (others => '0'));
-      temp_registers  <= (others => (others => '0'));
     elsif rising_edge(clk) then
       if enable = '1' then
         shift_registers(0)  <= DataIn;
