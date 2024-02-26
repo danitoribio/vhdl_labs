@@ -9,6 +9,8 @@ architecture sim of main_tb is
   constant CLOCK_PERIOD      : time := 10 ns;    -- Clock period (100MHz)
   constant CLOCK_SEMIPERIOD  : time := CLOCK_PERIOD / 2;  -- Clock period (100MHz)
   constant SIMULATION_PERIOD : time := 6754 us;  -- Simulation period (67.54ms) 8 periods of the given frequencies
+  -- FIXME: can we add more simulation period to see the delayed sine? or it is
+  -- strickly 2 periods of the given frequencies?
 
   constant N_FREQUENCIES : integer         := 4;
   type wait_array_type is array (0 to (N_FREQUENCIES - 1)) of time;
