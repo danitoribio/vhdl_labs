@@ -90,19 +90,19 @@ begin
   -- coeficientes  y para que sea modular Question teacher? puedo borrar los 0?
   -- filter_parallel_inst : filter_parallel
   --   generic map (
-  --     a0  => -7,
+  --     a0  => -14,
   --     a1  => 0,
-  --     a2  => 11,
-  --     a3  => 23,
-  --     a4  => 35,
-  --     a5  => 43,
-  --     a6  => 46,
-  --     a7  => 43,
-  --     a8  => 35,
-  --     a9  => 23,
-  --     a10 => 11,
+  --     a2  => 22,
+  --     a3  => 47,
+  --     a4  => 70,
+  --     a5  => 86,
+  --     a6  => 92,
+  --     a7  => 86,
+  --     a8  => 70,
+  --     a9  => 47,
+  --     a10 => 22,
   --     a11 => 0,
-  --     a12 => -7
+  --     a12 => -14
   --     )
   --   port map(
   --     Clk     => clk,

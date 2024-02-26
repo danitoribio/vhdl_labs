@@ -30,8 +30,8 @@ end filter_parallel;
 architecture behavioural of filter_parallel is
   constant N_COEFFICIENTS : integer := 12;
   constant N_BITS_DATA : integer := 8;
-  constant N_BITS_TEMP: integer:= 17;
   constant N_DIVISION: integer := 9; -- 2**N_DIVISION to divide the filter
+  constant N_BITS_TEMP: integer:= N_BITS_DATA + N_DIVISION;
 
   type shift_register_type is array (0 to N_COEFFICIENTS) of signed ((N_BITS_DATA - 1) downto 0);
   signal shift_registers : shift_register_type := (others => (others => '0'));
@@ -83,7 +83,7 @@ begin
     end if;
   end process;
 
-  temp_registers(0)  <= shift_registers(0) * COEFFICIENTS(0);
+  temp_registers(0)  <= resize(shift_registers(0) * COEFFICIENTS(0), N_BITS_TEMP);
   temp_registers(1)  <= temp_registers(0) + shift_registers(1) * COEFFICIENTS(1);
   temp_registers(2)  <= temp_registers(1) + shift_registers(2) * COEFFICIENTS(2);
   temp_registers(3)  <= temp_registers(2) + shift_registers(3) * COEFFICIENTS(3);
@@ -97,7 +97,7 @@ begin
   temp_registers(11) <= temp_registers(10) + shift_registers(11) * COEFFICIENTS(11);
   temp_registers(12) <= temp_registers(11) + shift_registers(12) * COEFFICIENTS(12);
 
-  DataOut <= temp_registers(12)((N_DIVISION + N_BITS_DATA - 1) downto (N_DIVISION));
+  DataOut <= temp_registers(12)((N_BITS_TEMP - 1) downto (N_DIVISION));
 
 end behavioural;
 
