@@ -3,10 +3,10 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity rom is
-  port (
-    time_instance : in  unsigned(3 downto 0) := (others => '0');  -- time instant to select the sine (16 different times)
-    sin_value     : out signed(7 downto 0)   := (others => '0')  -- value of the sine wave at each time instant
-    );
+    port (
+        time_instance : in  unsigned(3 downto 0) := (others => '0');  -- time instant to select the sine (16 different times)
+        sin_value     : out signed(7 downto 0)   := (others => '0')  -- value of the sine wave at each time instant
+        );
 end rom;
 
 architecture behavioural of rom is
