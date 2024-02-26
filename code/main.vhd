@@ -13,13 +13,13 @@ entity main is
 end main;
 
 architecture behavioural of main is
-  signal sine          : signed (7 downto 0);
-  signal sine_filtered : signed (7 downto 0);
+  signal sine          : signed (7 downto 0) := (others => '0');
+  signal sine_filtered : signed (7 downto 0) := (others => '0');
 
   constant MAX_COUNT : integer                      := 9999;  -- f = 10kHz for the sampling.
   signal counter     : integer range 0 to MAX_COUNT := 0;
 
-  signal EoC_sampling : std_logic;
+  signal EoC_sampling : std_logic := '0';
 
   component sine_generator is
     port (Clk   : in  std_logic;        --100MHz so we can count in 10ns

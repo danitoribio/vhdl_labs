@@ -29,9 +29,9 @@ end filter_parallel;
 
 architecture behavioural of filter_parallel is
   constant N_COEFFICIENTS : integer := 12;
-  constant N_BITS_DATA : integer := 8;
-  constant N_DIVISION: integer := 9; -- 2**N_DIVISION to divide the filter
-  constant N_BITS_TEMP: integer:= N_BITS_DATA + N_DIVISION;
+  constant N_BITS_DATA    : integer := 8;
+  constant N_DIVISION     : integer := 9;  -- 2**N_DIVISION to divide the filter
+  constant N_BITS_TEMP    : integer := N_BITS_DATA + N_DIVISION;
 
   type shift_register_type is array (0 to N_COEFFICIENTS) of signed ((N_BITS_DATA - 1) downto 0);
   signal shift_registers : shift_register_type := (others => (others => '0'));
@@ -75,10 +75,10 @@ begin
         shift_registers(11) <= shift_registers(10);
         shift_registers(12) <= shift_registers(11);
 
-        -- can I use for loops better?
-        -- for i in 1 to N_COEFFICIENTS loop
-        --   shift_registers(i) <= shift_registers(i-1);
-        -- end loop;
+      -- can I use for loops better?
+      -- for i in 1 to N_COEFFICIENTS loop
+      --   shift_registers(i) <= shift_registers(i-1);
+      -- end loop;
       end if;
     end if;
   end process;

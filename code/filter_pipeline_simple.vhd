@@ -27,14 +27,13 @@ entity filter_pipeline_simple is
 
 end filter_pipeline_simple;
 
-
 architecture behavioural of filter_pipeline_simple is
   constant N_COEFFICIENTS : integer := 12;
   constant N_REG_PIPELINE : integer := 1;
 
   constant N_BITS_DATA : integer := 8;
   constant N_DIVISION  : integer := 9;  -- 2**N_DIVISION to divide the filter
-  constant N_BITS_TEMP: integer:= N_BITS_DATA + N_DIVISION;
+  constant N_BITS_TEMP : integer := N_BITS_DATA + N_DIVISION;
 
   type shift_register_type is array (0 to N_COEFFICIENTS) of signed ((N_BITS_DATA - 1) downto 0);
   signal shift_registers : shift_register_type := (others => (others => '0'));
@@ -79,11 +78,11 @@ begin
         shift_registers(6) <= shift_registers(5);
 
         -- pipeline critical zone split. We add a temp_pipeline_register from 6 to 7
-        temp_registers(6) <= temp_registers(5) + shift_registers(6) * COEFFICIENTS(6);
+        temp_registers(6)           <= temp_registers(5) + shift_registers(6) * COEFFICIENTS(6);
         shift_pipeline_registers(0) <= shift_registers(6);
 
-        shift_registers(7) <= shift_pipeline_registers(0);
-        shift_registers(8) <= shift_registers(7);
+        shift_registers(7)  <= shift_pipeline_registers(0);
+        shift_registers(8)  <= shift_registers(7);
         shift_registers(9)  <= shift_registers(8);
         shift_registers(10) <= shift_registers(9);
         shift_registers(11) <= shift_registers(10);
@@ -99,8 +98,8 @@ begin
   temp_registers(4) <= temp_registers(3) + shift_registers(4) * COEFFICIENTS(4);
   temp_registers(5) <= temp_registers(4) + shift_registers(5) * COEFFICIENTS(5);
 
-  temp_registers(7) <= temp_registers(6) + shift_registers(7) * COEFFICIENTS(7);
-  temp_registers(8) <= temp_registers(7) + shift_registers(8) * COEFFICIENTS(8);
+  temp_registers(7)  <= temp_registers(6) + shift_registers(7) * COEFFICIENTS(7);
+  temp_registers(8)  <= temp_registers(7) + shift_registers(8) * COEFFICIENTS(8);
   temp_registers(9)  <= temp_registers(8) + shift_registers(9) * COEFFICIENTS(9);
   temp_registers(10) <= temp_registers(9) + shift_registers(10) * COEFFICIENTS(10);
   temp_registers(11) <= temp_registers(10) + shift_registers(11) * COEFFICIENTS(11);

@@ -12,12 +12,12 @@ entity sine_generator is
 end sine_generator;
 
 architecture behavioural of sine_generator is
-  signal MaxCount    : integer range 0 to 10417  := 0;  -- max count for the counter to count the frequency
-  signal counter     : integer range 0 to 10417  := 0;  -- biggest case when f = 600 so 10417 cycles
-  signal rom_address : unsigned(3 downto 0);            -- address of the ROM
-  signal rom_data    : signed(7 downto 0);              -- data of the ROM
+  signal MaxCount    : integer range 0 to 10417 := 0;  -- max count for the counter to count the frequency
+  signal counter     : integer range 0 to 10417 := 0;  -- biggest case when f = 600 so 10417 cycles
+  signal rom_address : unsigned(3 downto 0)     := (others => '0');  -- address of the ROM
+  signal rom_data    : signed(7 downto 0)       := (others => '0');  -- data of the ROM
 
-  signal EoC : std_logic;  --End of Counter to change to the next address of the ROM
+  signal EoC : std_logic := '0';  --End of Counter to change to the next address of the ROM
 
   component rom is
     port (

@@ -27,14 +27,13 @@ entity filter_pipeline is
 
 end filter_pipeline;
 
-
 architecture behavioural of filter_pipeline is
   constant N_COEFFICIENTS : integer := 12;
   constant N_REG_PIPELINE : integer := 2;
 
   constant N_BITS_DATA : integer := 8;
   constant N_DIVISION  : integer := 9;  -- 2**N_DIVISION to divide the filter
-  constant N_BITS_TEMP: integer:= N_BITS_DATA + N_DIVISION;
+  constant N_BITS_TEMP : integer := N_BITS_DATA + N_DIVISION;
 
   type shift_register_type is array (0 to N_COEFFICIENTS) of signed ((N_BITS_DATA - 1) downto 0);
   signal shift_registers : shift_register_type := (others => (others => '0'));
