@@ -1,0 +1,66 @@
+#+TITLE: Laboratory Report
+#+AUTHOR: Andrés Navarro Pedregal and Daniel Toribio Bruna
+#+SETUPFILE: ./template/setupfile.org
+
+#+INCLUDE: "./template/titlepage.tex" export latex
+#+INCLUDE: "./template/tableofcontents.tex" export latex
+
+* Introduction
+In this lab report, our goal is to create a waveform generation and FIR (Finite Impulse Response) filter implementation. Our objective is to understand and construct circuits that can generate sinusoidal signals and filter them effectively. These circuits will be designed to operate on FPGA (Field-Programmable Gate Array) boards, specifically the Basys 3 model, utilizing components such as LEDs and digital-to-analog converters (DACs).
+
+Session 1: Waveform Generator
+In our first session, we create a circuit capable of generating sinusoidal signals represented with 8 bits of precision. This circuit will be responsible for producing these signals at different frequencies, which will be selected through input switches. The generated waveform will be visualized through both LEDs on the FPGA board and an 8-bit DAC (Pmod R2R), ensuring versatility in signal output. Our design will consist of various components including timers, memory units, and counters to facilitate accurate signal generation and display.
+
+Session 2 and 3: FIR Filter Implementation
+Moving forward, we implement a digital FIR filter alongside the previously developed waveform generator. The FIR filter serves the purpose of refining the generated signals by attenuating frequencies beyond a specified cutoff point. Utilizing filter coefficients obtained from MATLAB, we construct a filter with a predetermined number of stages to achieve the desired filtering effect. Integrating this filter into our existing circuitry, we aim to enhance the quality of the generated signals for various applications.
+
+Throughout these sessions, we'll engage in simulation, synthesis, and practical implementation of our designs on FPGA boards. Additionally, we'll document our progress through test benches, oscilloscope measurements, and final reports, ensuring a comprehensive understanding of the design process and its outcomes.
+
+By the end of these sessions, we anticipate gaining valuable insights into circuit design, signal processing, and FPGA-based system implementation, laying a solid foundation for further exploration in the field of integrated circuits and microelectronics.
+
+* Design Characteristics
+
+** Full Implemented Functionality
+# ASK que son????
+
+** I/O Interface, Type And Functionality
+# ASK que son????
+
+* Design Structure
+
+** Block Diagram
+
+** Component Description
+
+** Calculation
+
+*** Frequencies
+
+*** Filter Coefficients
+
+[[./img/filter_coefficient_matlab.jpg]]
+
+[[./img/filter_coefficient_calculations.jpg]]
+
+** Simulations
+
+[[./img/simulation.jpg]]
+
+* Architectures
+
+** Parallel Architecture
+
+
+
+** One Flip-Flop Pipeline Architecture
+
+** Two Flip-Flop Pipeline Architecture
+
+* Synthesis Results
+
+# TODO Add table with the results (area: flip-flops, LUTS, RAM block, multipliers) and (timing: max clock freq)
+
+# TODO Comment
+
+# ASK Encountered Problems????
+* Conclusion
