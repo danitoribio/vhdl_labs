@@ -1,4 +1,4 @@
-% Created 2024-03-07 Thu 18:23
+% Created 2024-03-08 Fri 16:11
 % Intended LaTeX compiler: pdflatex
 \documentclass[a4paper, 12pt]{article}
 \usepackage[utf8]{inputenc}
@@ -99,7 +99,7 @@
 \end{titlepage}
 \tableofcontents
 \section{Introduction}
-\label{sec:org0a9adae}
+\label{sec:orgfb58a17}
 In this lab report, our goal is to create a waveform generation and FIR (Finite Impulse Response) filter implementation. Our objective is to understand and construct circuits that can generate sinusoidal signals and filter them effectively. These circuits will be designed to operate on FPGA (Field-Programmable Gate Array) boards, specifically the Basys 3 model, utilizing components such as LEDs and digital-to-analog converters (DACs).
 
 Session 1: Waveform Generator
@@ -112,51 +112,156 @@ Throughout these sessions, we'll engage in simulation, synthesis, and practical 
 
 By the end of these sessions, we anticipate gaining valuable insights into circuit design, signal processing, and FPGA-based system implementation, laying a solid foundation for further exploration in the field of integrated circuits and microelectronics.
 \section{Design Characteristics}
-\label{sec:orgdfa6626}
+\label{sec:org5b89b9e}
 
 \subsection{Full Implemented Functionality}
-\label{sec:org8fb0e74}
-
+\label{sec:org15b74cb}
 \subsection{I/O Interface, Type And Functionality}
-\label{sec:org16bd348}
+\label{sec:orgead3300}
 \section{Design Structure}
-\label{sec:orge083825}
+\label{sec:org0f2b84f}
 
 \subsection{Block Diagram}
-\label{sec:orgdda28f4}
+\label{sec:org7e9f4b0}
 
 \subsection{Component Description}
-\label{sec:org6575ba1}
+\label{sec:orgdbe5901}
 
 \subsection{Calculation}
-\label{sec:org315bfa7}
+\label{sec:org08c0ae7}
 
 \subsubsection{Frequencies}
-\label{sec:org036190f}
+\label{sec:org4895a3e}
+\begin{enumerate}
+\item Values:
+\label{sec:org4c511d0}
 
+We calculated 16 values of a sine signal with the following code:
+
+\begin{verbatim}
+import math
+
+ # Define parameters
+amplitude = 127
+frequency = 1  # Adjust frequency as needed
+num_points = 16
+
+ # Generate values
+values = []
+for t in range(num_points):
+        values.append((int) (amplitude * math.sin((2 * math.pi * t) / num_points)))
+
+ # Print the values
+for i, val in enumerate(values):
+        print(f"f(t_{i}) =", val)
+\end{verbatim}
+
+\begin{verbatim}
+f(t_0) = 0
+f(t_1) = 48
+f(t_2) = 89
+f(t_3) = 117
+f(t_4) = 127
+f(t_5) = 117
+f(t_6) = 89
+f(t_7) = 48
+f(t_8) = 0
+f(t_9) = -48
+f(t_10) = -89
+f(t_11) = -117
+f(t_12) = -127
+f(t_13) = -117
+f(t_14) = -89
+f(t_15) = -48
+\end{verbatim}
+\item Periods:
+\label{sec:orge9e8149}
+
+The frequencies we needed to use were 600, 1000, 2200, and 3900 Hz. For the period, we calculated that with the following code
+
+\begin{verbatim}
+frequencies = [600, 1000, 2200, 3900]
+num_points = 16
+clock_frequency = 10e7
+
+ # Generate values
+values = []
+for i in range(len(frequencies)):
+        values.append((int) (clock_frequency / (frequencies[i] * num_points)))
+
+ # Print the values
+for i, val in enumerate(values):
+        print(f"time({i}) =", val)
+\end{verbatim}
+
+\begin{verbatim}
+time(0) = 10416
+time(1) = 6250
+time(2) = 2840
+time(3) = 1602
+\end{verbatim}
+\end{enumerate}
 \subsubsection{Filter Coefficients}
-\label{sec:org6e3cad3}
+\label{sec:org913ebc1}
+
+For the coefficients of the filter, we used a 12 order filter, therefore we needed 13 different values. The calculations can be seen below.
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{./img/filter_coefficient_matlab.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{./img/filter_coefficient_calculations.jpg}
+\end{center}
 \subsection{Simulations}
-\label{sec:org869fb58}
+\label{sec:org76c61fd}
+
+For the simulations, 2 periods of each signal where performed. Note that the filter has a cutoff frequency of 1000 Hz.
+
+For the first frequency, the signal passes without a problem. For the second frequency, it reduces by half as it is the same as the cutoff frequency where the filter will attenuate the signal by one half. And for the other signals, the filter filters out completelly the sine wave.
 
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/simulation.jpg}
 \end{center}
 \section{Architectures}
-\label{sec:org3f48db0}
+\label{sec:org6336008}
 
+Different architectures have been proposed to reduce the critical region of the filter so we can use higher frequencies. Note, that the VHDL code is separated in different files for each filter.
 \subsection{Parallel Architecture}
-\label{sec:org995ef6a}
+\label{sec:org03e821b}
 
+For the parallel architecture, we use the following diagram.
 
-
+This architecture has a big critical region compared to the pipeline architecture as there are no intermediate registers to save the information.
 \subsection{One Flip-Flop Pipeline Architecture}
-\label{sec:org8dc1fed}
+\label{sec:org19951ec}
 
+For the pipeline architecture with one intermediate step, we use the following diagram.
+
+We added a single temporary flip-flop to reduce the critical region of the filter by half. Therefore, we expect that even though we will increase the area of the implementation we increase the maximum frequency that the filter can work at.
 \subsection{Two Flip-Flop Pipeline Architecture}
-\label{sec:org831450f}
+\label{sec:orgd61567e}
+
+For the final part, we added a second stage in the pipeline architecture to see if it further increases the maxiumum frequency.
 \section{Synthesis Results}
-\label{sec:orgcf0f8ea}
+\label{sec:org6b9474c}
+
+\begin{center}
+\begin{tabular}{lrrr}
+ & Parallel & One Flip-Flop Pipeline & Two Flip-Flop Pipeline\\
+\hline
+Logic LUTS & 462 & 465 & 462\\
+Flip Flop Registers & 136 & 161 & 186\\
+WPWS &  &  & \\
+Max Frequency &  &  & \\
+\end{tabular}
+\end{center}
+
+As we can see in the results from the table above our assumptions are correct. As the pipeline architecture is an implementation of the parallel one but with more registers to save temporary data, the number of flip-flops, therefore the area increases the more intermediate steps we add.
+
+This temporary registers are used to reduce the critical region of the filter so the filter can be used at higher frequencies as seen.
+
+Finally, the LUTS (look up tables) stay almost constant among the 3 architectures analyzed. This is as the computations are the same for the 3 cases.
 \section{Conclusion}
-\label{sec:org74c77a1}
+\label{sec:org165bd0a}
 \end{document}

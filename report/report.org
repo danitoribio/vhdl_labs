@@ -35,8 +35,76 @@ By the end of these sessions, we anticipate gaining valuable insights into circu
 ** Calculation
 
 *** Frequencies
+**** Values:
+
+We calculated 16 values of a sine signal with the following code:
+
+#+begin_src python :results output :exports both
+import math
+
+ # Define parameters
+amplitude = 127
+frequency = 1  # Adjust frequency as needed
+num_points = 16
+
+ # Generate values
+values = []
+for t in range(num_points):
+        values.append((int) (amplitude * math.sin((2 * math.pi * t) / num_points)))
+
+ # Print the values
+for i, val in enumerate(values):
+        print(f"f(t_{i}) =", val)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+f(t_0) = 0
+f(t_1) = 48
+f(t_2) = 89
+f(t_3) = 117
+f(t_4) = 127
+f(t_5) = 117
+f(t_6) = 89
+f(t_7) = 48
+f(t_8) = 0
+f(t_9) = -48
+f(t_10) = -89
+f(t_11) = -117
+f(t_12) = -127
+f(t_13) = -117
+f(t_14) = -89
+f(t_15) = -48
+#+end_example
+
+**** Periods:
+
+The frequencies we needed to use were 600, 1000, 2200, and 3900 Hz. For the period, we calculated that with the following code
+
+#+begin_src python :exports both :results output
+frequencies = [600, 1000, 2200, 3900]
+num_points = 16
+clock_frequency = 10e7
+
+ # Generate values
+values = []
+for i in range(len(frequencies)):
+        values.append((int) (clock_frequency / (frequencies[i] * num_points)))
+
+ # Print the values
+for i, val in enumerate(values):
+        print(f"time({i}) =", val)
+#+end_src
+
+#+RESULTS:
+: time(0) = 10416
+: time(1) = 6250
+: time(2) = 2840
+: time(3) = 1602
 
 *** Filter Coefficients
+
+For the coefficients of the filter, we used a 12 order filter, therefore we needed 13 different values. The calculations can be seen below.
 
 [[./img/filter_coefficient_matlab.jpg]]
 
@@ -44,23 +112,55 @@ By the end of these sessions, we anticipate gaining valuable insights into circu
 
 ** Simulations
 
+For the simulations, 2 periods of each signal where performed. Note that the filter has a cutoff frequency of 1000 Hz.
+
+For the first frequency, the signal passes without a problem. For the second frequency, it reduces by half as it is the same as the cutoff frequency where the filter will attenuate the signal by one half. And for the other signals, the filter filters out completelly the sine wave.
+
 [[./img/simulation.jpg]]
 
 * Architectures
 
+Different architectures have been proposed to reduce the critical region of the filter so we can use higher frequencies. Note, that the VHDL code is separated in different files for each filter.
+
 ** Parallel Architecture
 
+For the parallel architecture, we use the following diagram.
 
+# TODO: add image
+
+This architecture has a big critical region compared to the pipeline architecture as there are no intermediate registers to save the information.
 
 ** One Flip-Flop Pipeline Architecture
 
+For the pipeline architecture with one intermediate step, we use the following diagram.
+
+# TODO: add image
+
+We added a single temporary flip-flop to reduce the critical region of the filter by half. Therefore, we expect that even though we will increase the area of the implementation we increase the maximum frequency that the filter can work at.
+
 ** Two Flip-Flop Pipeline Architecture
+
+For the final part, we added a second stage in the pipeline architecture to see if it further increases the maxiumum frequency.
+
+# TODO: add image
 
 * Synthesis Results
 
+|                     | Parallel | One Flip-Flop Pipeline | Two Flip-Flop Pipeline |
+|---------------------+----------+------------------------+------------------------|
+| Logic LUTS      |      462 |                    465 |                    462 |
+| Flip Flop Registers |      136 |                    161 |                    186 |
+| WPWS                |          |                        |                        |
+| Max Frequency       |          |                        |                        |
 # TODO Add table with the results (area: flip-flops, LUTS, RAM block, multipliers) and (timing: max clock freq)
 
 # TODO Comment
+
+As we can see in the results from the table above our assumptions are correct. As the pipeline architecture is an implementation of the parallel one but with more registers to save temporary data, the number of flip-flops, therefore the area increases the more intermediate steps we add.
+
+This temporary registers are used to reduce the critical region of the filter so the filter can be used at higher frequencies as seen.
+
+Finally, the LUTS (look up tables) stay almost constant among the 3 architectures analyzed. This is as the computations are the same for the 3 cases.
 
 # ASK Encountered Problems????
 * Conclusion
