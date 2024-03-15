@@ -21,16 +21,28 @@ By the end of these sessions, we anticipate gaining valuable insights into circu
 * Design Characteristics
 
 ** Full Implemented Functionality
-# ASK que son????
+For this circuit, the main functionality is the representation of a signal generation and a FIR filter.
+
+The signal generation will generate a sine signal by means of using timers to modulate the frequency, and a ROM to store the values of the signal. By using a high enough clock frequency, the signal will assimilate almost the same as a continuous sine signal. In the pictures below of the implemented circuit we can see a perfect signal.
+
+For the FIR filter, we will be using different architectures to apply the filter at the output of the signal. For this laboratory we have used 3 different architectures: parallel and pipiline with 2 different set ups. The details of each architecture can be seen below.
 
 ** I/O Interface, Type And Functionality
-# ASK que son????
+For the interface we will have the different inputs and outputs:
+
+- Clk: it is the clock that the system works in. In order to ensure a proper behaviour, a clock of 10MHz must be used. It is a logic signal with 0 and 1 as values.
+- Reset: it is the signal to reset the whole circuit. It is a logic signal with 0 and 1 as values.
+- Per: it will be the selector of the frequency in used. It will be a two pin logic signal with 4 different values. Each value for each of the different frequency in used.
+- Led: it will be the output of the signal after the filter. It will be a 8 bits with two-complement representation.
+- Dac: this will be the same output as the led of 8 bits but using positive numbers.
 
 * Design Structure
 
 ** Block Diagram
 
 ** Component Description
+
+# ASK que son????
 
 ** Calculation
 
@@ -106,8 +118,10 @@ for i, val in enumerate(values):
 
 For the coefficients of the filter, we used a 12 order filter, therefore we needed 13 different values. The calculations can be seen below.
 
+#+CAPTION: Matlab Coefficient Calculations
 [[./img/filter_coefficient_matlab.jpg]]
 
+#+CAPTION: Filter Coefficients Adaptation For Use.
 [[./img/filter_coefficient_calculations.jpg]]
 
 ** Simulations
@@ -116,6 +130,7 @@ For the simulations, 2 periods of each signal where performed. Note that the fil
 
 For the first frequency, the signal passes without a problem. For the second frequency, it reduces by half as it is the same as the cutoff frequency where the filter will attenuate the signal by one half. And for the other signals, the filter filters out completelly the sine wave.
 
+#+CAPTION: VHDL Test Bench Simulation
 [[./img/simulation.jpg]]
 
 * Architectures
@@ -148,7 +163,7 @@ For the final part, we added a second stage in the pipeline architecture to see 
 
 |                     | Parallel | One Flip-Flop Pipeline | Two Flip-Flop Pipeline |
 |---------------------+----------+------------------------+------------------------|
-| Logic LUTS      |      462 |                    465 |                    462 |
+| Logic LUTS          |      462 |                    465 |                    462 |
 | Flip Flop Registers |      136 |                    161 |                    186 |
 | WPWS                |          |                        |                        |
 | Max Frequency       |          |                        |                        |
@@ -162,5 +177,27 @@ This temporary registers are used to reduce the critical region of the filter so
 
 Finally, the LUTS (look up tables) stay almost constant among the 3 architectures analyzed. This is as the computations are the same for the 3 cases.
 
-# ASK Encountered Problems????
+** Time Results
+[[./img/time_report_parallel.jpg]]
+
+[[./img/time_report_pipeline_simple.jpg]]
+
+[[./img/time_report_pipeline.jpg]]
+
+* Hardware Results
+For the hardware results we have tested with the oscilloscope the 4 signals to see the filter in action. In the pictures below, there are two signals. The one above is the sine filtered, and the one below is the sine not filtered.
+
+#+CAPTION: For the frequency 600Hz, we can see that the filter allows the sinal to pass as it is below the cut-off frequency. The signal is almost not attenuated.
+[[./img/oscilloscope_f_600.jpg]]
+
+#+CAPTION: For the frequency 1000Hz, we can see that the filter allows the sinal to pass as it is below the cut-off frequency. The signal is almost not attenuated.
+[[./img/oscilloscope_f_1000.jpg]]
+
+#+CAPTION: For the frequency 2200Hz, we can see that the filter filters the whole signal as it is expected.
+[[./img/oscilloscope_f_2200.jpg]]
+
+#+CAPTION: For the frequency 3900Hz, we can see that the filter filters the whole signal as it is expected, even more than the 2200Hz frequency.
+[[./img/oscilloscope_f_3900.jpg]]
+
 * Conclusion
+All in all, in this laboratory we have learned how to develope a signal generator and FIR filter in a FPGA. We have designed the filter with different architectres to see the different implementations. In the end, we were able to identify the advantages and drawback of each implementation, and the ability to increase the clock cycle of a system by decreasing the critical path of our code with the use of Flip-Flops.
