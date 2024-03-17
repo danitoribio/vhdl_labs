@@ -37,8 +37,10 @@ For the interface we will have the different inputs and outputs:
 - Dac: this will be the same output as the led of 8 bits but using positive numbers.
 
 * Design Structure
-
 ** Block Diagram
+
+#+CAPTION: Block diagram of the full circuit implementation.
+[[./img/block_diagram.jpg]]
 
 ** Component Description
 
@@ -141,7 +143,8 @@ Different architectures have been proposed to reduce the critical region of the 
 
 For the parallel architecture, we use the following diagram.
 
-# TODO: add image
+#+CAPTION: Parallel architecture
+[[./img/architecture_parallel.jpg]]
 
 This architecture has a big critical region compared to the pipeline architecture as there are no intermediate registers to save the information.
 
@@ -149,7 +152,8 @@ This architecture has a big critical region compared to the pipeline architectur
 
 For the pipeline architecture with one intermediate step, we use the following diagram.
 
-# TODO: add image
+#+CAPTION: Pipeline architecture with one step.
+[[./img/architecture_pipeline_simple.jpg]]
 
 We added a single temporary flip-flop to reduce the critical region of the filter by half. Therefore, we expect that even though we will increase the area of the implementation we increase the maximum frequency that the filter can work at.
 
@@ -157,7 +161,8 @@ We added a single temporary flip-flop to reduce the critical region of the filte
 
 For the final part, we added a second stage in the pipeline architecture to see if it further increases the maxiumum frequency.
 
-# TODO: add image
+#+CAPTION: Pipeline architecture with two steps.
+[[./img/architecture_pipeline.jpg]]
 
 * Synthesis Results
 
