@@ -19,7 +19,6 @@ Throughout these sessions, we'll engage in simulation, synthesis, and practical 
 By the end of these sessions, we anticipate gaining valuable insights into circuit design, signal processing, and FPGA-based system implementation, laying a solid foundation for further exploration in the field of integrated circuits and microelectronics.
 
 * Design Characteristics
-
 ** Full Implemented Functionality
 For this circuit, the main functionality is the representation of a signal generation and a FIR filter.
 
@@ -44,10 +43,19 @@ For the interface we will have the different inputs and outputs:
 
 ** Component Description
 
-# ASK que son????
+For the implementation, we will be using wo general blocks, a sine generator and a filter.
+
+*** Sine Generator
+For the sine generator, we will have a ROM that will store the values of the sine wave. Each output will be selected sequentially with a counter that will be managed with a timer. The period of the timer will depend on the frequency chosen by the user.
+
+*** Filter
+The filter that we will be using it will be a FIR filter with 12 stages. You can check the calculations performed below but the formula we will be using will be:
+
+\begin{equation}
+y[n] = \sum_{i=0}^{12} a_i \cdot x[n-i]
+\end{equation}
 
 ** Calculation
-
 *** Frequencies
 **** Values:
 
