@@ -1,4 +1,4 @@
-% Created 2024-03-19 Tue 12:47
+% Created 2024-03-21 Thu 16:11
 % Intended LaTeX compiler: pdflatex
 \documentclass[a4paper, 12pt]{article}
 \usepackage[utf8]{inputenc}
@@ -99,7 +99,7 @@
 \end{titlepage}
 \tableofcontents
 \section{Introduction}
-\label{sec:org5cce83b}
+\label{sec:orge212b29}
 In this lab report, our goal is to create a waveform generation and FIR (Finite Impulse Response) filter implementation. Our objective is to understand and construct circuits that can generate sinusoidal signals and filter them effectively. These circuits will be designed to operate on FPGA (Field-Programmable Gate Array) boards, specifically the Basys 3 model, utilizing components such as LEDs and digital-to-analog converters (DACs).
 
 Session 1: Waveform Generator
@@ -112,16 +112,16 @@ Throughout these sessions, we'll engage in simulation, synthesis, and practical 
 
 By the end of these sessions, we anticipate gaining valuable insights into circuit design, signal processing, and FPGA-based system implementation, laying a solid foundation for further exploration in the field of integrated circuits and microelectronics.
 \section{Design Characteristics}
-\label{sec:org5c07b9f}
+\label{sec:orga70cf18}
 \subsection{Full Implemented Functionality}
-\label{sec:org40f5df0}
+\label{sec:orgf0daee9}
 For this circuit, the main functionality is the representation of a signal generation and a FIR filter.
 
 The signal generation will generate a sine signal by means of using timers to modulate the frequency, and a ROM to store the values of the signal. By using a high enough clock frequency, the signal will assimilate almost the same as a continuous sine signal. In the pictures below of the implemented circuit we can see a perfect signal.
 
 For the FIR filter, we will be using different architectures to apply the filter at the output of the signal. For this laboratory we have used 3 different architectures: parallel and pipiline with 2 different set ups. The details of each architecture can be seen below.
 \subsection{I/O Interface, Type And Functionality}
-\label{sec:org87874a9}
+\label{sec:org58512dc}
 For the interface we will have the different inputs and outputs:
 
 \begin{itemize}
@@ -132,9 +132,9 @@ For the interface we will have the different inputs and outputs:
 \item Dac: this will be the same output as the led of 8 bits but using positive numbers.
 \end{itemize}
 \section{Design Structure}
-\label{sec:org3b515b3}
+\label{sec:orgd63874d}
 \subsection{Block Diagram}
-\label{sec:orga619281}
+\label{sec:orgd29a75f}
 
 \begin{figure}[htbp]
 \centering
@@ -142,26 +142,26 @@ For the interface we will have the different inputs and outputs:
 \caption{Block diagram of the full circuit implementation.}
 \end{figure}
 \subsection{Component Description}
-\label{sec:org219d0bb}
+\label{sec:org83c3681}
 
 For the implementation, we will be using wo general blocks, a sine generator and a filter.
 \subsubsection{Sine Generator}
-\label{sec:org236141b}
+\label{sec:org270db78}
 For the sine generator, we will have a ROM that will store the values of the sine wave. Each output will be selected sequentially with a counter that will be managed with a timer. The period of the timer will depend on the frequency chosen by the user.
 \subsubsection{Filter}
-\label{sec:orgaa32b29}
+\label{sec:org12fc0a3}
 The filter that we will be using it will be a FIR filter with 12 stages. You can check the calculations performed below but the formula we will be using will be:
 
 \begin{equation}
 y[n] = \sum_{i=0}^{12} a_i \cdot x[n-i]
 \end{equation}
 \subsection{Calculation}
-\label{sec:org57f7956}
+\label{sec:org9dba4cc}
 \subsubsection{Frequencies}
-\label{sec:org703a37d}
+\label{sec:org4cd483f}
 \begin{enumerate}
 \item Values:
-\label{sec:org3e00c26}
+\label{sec:orgdfa597c}
 
 We calculated 16 values of a sine signal with the following code:
 
@@ -202,7 +202,7 @@ f(t_14) = -89
 f(t_15) = -48
 \end{verbatim}
 \item Periods:
-\label{sec:org202eb8e}
+\label{sec:org2296e8b}
 
 The frequencies we needed to use were 600, 1000, 2200, and 3900 Hz. For the period, we calculated that with the following code
 
@@ -229,15 +229,12 @@ time(3) = 1602
 \end{verbatim}
 \end{enumerate}
 \subsubsection{Filter Coefficients}
-\label{sec:orgd735e0d}
-
+\label{sec:org3e0147a}
 For the coefficients of the filter, we used a 12 order filter, therefore we needed 13 different values. The calculations can be seen below.
 
-\begin{figure}[htbp]
-\centering
+\begin{center}
 \includegraphics[width=.9\linewidth]{./img/filter_coefficient_matlab.jpg}
-\caption{Matlab Coefficient Calculations}
-\end{figure}
+\end{center}
 
 \begin{figure}[htbp]
 \centering
@@ -245,7 +242,7 @@ For the coefficients of the filter, we used a 12 order filter, therefore we need
 \caption{Filter Coefficients Adaptation For Use.}
 \end{figure}
 \subsection{Simulations}
-\label{sec:org349e5e9}
+\label{sec:orgfa45d68}
 
 For the simulations, 2 periods of each signal where performed. Note that the filter has a cutoff frequency of 1000 Hz.
 
@@ -257,11 +254,11 @@ For the first frequency, the signal passes without a problem. For the second fre
 \caption{VHDL Test Bench Simulation}
 \end{figure}
 \section{Architectures}
-\label{sec:orgdf88fcb}
+\label{sec:orgf9ac256}
 
 Different architectures have been proposed to reduce the critical region of the filter so we can use higher frequencies. Note, that the VHDL code is separated in different files for each filter.
 \subsection{Parallel Architecture}
-\label{sec:org9182d6c}
+\label{sec:orge1207ce}
 
 For the parallel architecture, we use the following diagram.
 
@@ -273,7 +270,7 @@ For the parallel architecture, we use the following diagram.
 
 This architecture has a big critical region compared to the pipeline architecture as there are no intermediate registers to save the information.
 \subsection{One Flip-Flop Pipeline Architecture}
-\label{sec:org852d105}
+\label{sec:orge72f589}
 
 For the pipeline architecture with one intermediate step, we use the following diagram.
 
@@ -285,7 +282,7 @@ For the pipeline architecture with one intermediate step, we use the following d
 
 We added a single temporary flip-flop to reduce the critical region of the filter by half. Therefore, we expect that even though we will increase the area of the implementation we increase the maximum frequency that the filter can work at.
 \subsection{Two Flip-Flop Pipeline Architecture}
-\label{sec:org84a3de4}
+\label{sec:org3ea17ca}
 
 For the final part, we added a second stage in the pipeline architecture to see if it further increases the maxiumum frequency.
 
@@ -295,7 +292,7 @@ For the final part, we added a second stage in the pipeline architecture to see 
 \caption{Pipeline architecture with two steps.}
 \end{figure}
 \section{Synthesis Results}
-\label{sec:org114d16c}
+\label{sec:orgdad9f73}
 
 \begin{center}
 \begin{tabular}{lrrr}
@@ -314,7 +311,7 @@ This temporary registers are used to reduce the critical region of the filter so
 
 Finally, the LUTS (look up tables) stay almost constant among the 3 architectures analyzed. This is as the computations are the same for the 3 cases.
 \subsection{Time Results}
-\label{sec:org56a04bc}
+\label{sec:orgd6ec97b}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/time_report_parallel.jpg}
 \end{center}
@@ -327,7 +324,7 @@ Finally, the LUTS (look up tables) stay almost constant among the 3 architecture
 \includegraphics[width=.9\linewidth]{./img/time_report_pipeline.jpg}
 \end{center}
 \section{Hardware Results}
-\label{sec:org42312a2}
+\label{sec:org02123eb}
 For the hardware results we have tested with the oscilloscope the 4 signals to see the filter in action. In the pictures below, there are two signals. The one above is the sine filtered, and the one below is the sine not filtered.
 
 \begin{figure}[htbp]
@@ -354,6 +351,6 @@ For the hardware results we have tested with the oscilloscope the 4 signals to s
 \caption{For the frequency 3900Hz, we can see that the filter filters the whole signal as it is expected, even more than the 2200Hz frequency.}
 \end{figure}
 \section{Conclusion}
-\label{sec:org7e424bb}
+\label{sec:org0748156}
 All in all, in this laboratory we have learned how to develope a signal generator and FIR filter in a FPGA. We have designed the filter with different architectres to see the different implementations. In the end, we were able to identify the advantages and drawback of each implementation, and the ability to increase the clock cycle of a system by decreasing the critical path of our code with the use of Flip-Flops.
 \end{document}

@@ -125,10 +125,8 @@ for i, val in enumerate(values):
 : time(3) = 1602
 
 *** Filter Coefficients
-
 For the coefficients of the filter, we used a 12 order filter, therefore we needed 13 different values. The calculations can be seen below.
 
-#+CAPTION: Matlab Coefficient Calculations
 [[./img/filter_coefficient_matlab.jpg]]
 
 #+CAPTION: Filter Coefficients Adaptation For Use.
