@@ -172,15 +172,13 @@ For the final part, we added a second stage in the pipeline architecture to see 
 
 * Synthesis Results
 
-|                     | Parallel | One Flip-Flop Pipeline | Two Flip-Flop Pipeline |
-|---------------------+----------+------------------------+------------------------|
-| Logic LUTS          |      462 |                    465 |                    462 |
-| Flip Flop Registers |      136 |                    161 |                    186 |
-| WPWS                |          |                        |                        |
-| Max Frequency       |          |                        |                        |
+|                              | Parallel | One Flip-Flop Pipeline | Two Flip-Flop Pipeline |
+|------------------------------+----------+------------------------+------------------------|
+| Logic LUTS                   |      462 |                    465 |                    462 |
+| Flip Flop Registers          |      136 |                    161 |                    186 |
+| Worst Negative Slack (in ns) |    5.572 |                  4.561 |                  4.176 |
+| Max Frequency (in MHz)       |      179 |                    219 |                    239 |
 # TODO Add table with the results (area: flip-flops, LUTS, RAM block, multipliers) and (timing: max clock freq)
-
-# TODO Comment
 
 As we can see in the results from the table above our assumptions are correct. As the pipeline architecture is an implementation of the parallel one but with more registers to save temporary data, the number of flip-flops, therefore the area increases the more intermediate steps we add.
 
@@ -189,10 +187,13 @@ This temporary registers are used to reduce the critical region of the filter so
 Finally, the LUTS (look up tables) stay almost constant among the 3 architectures analyzed. This is as the computations are the same for the 3 cases.
 
 ** Time Results
+#+CAPTION: Time report for the parallel architecture
 [[./img/time_report_parallel.jpg]]
 
+#+CAPTION: Time report for the pipeline with 1 stage architecture
 [[./img/time_report_pipeline_simple.jpg]]
 
+#+CAPTION: Time report for the pipeline with 2 stages architecture
 [[./img/time_report_pipeline.jpg]]
 
 * Hardware Results
