@@ -1,21 +1,41 @@
 Circuit: * C:\Users\dtori\OneDrive\Escritorio\UC3M\CUARTO\vhdl_labs\analog_lab\LTSpice_models\entregable_23_24_estudiantes.asc
 
-Direct Newton iteration for .op point succeeded.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-05
+Gmin = 1.6455e-06
+Gmin = 1.76685e-07
+Gmin = 1.89714e-08
+Gmin = 2.03704e-09
+Gmin = 2.18725e-10
+Gmin = 2.34854e-11
+Gmin = 2.52173e-12
+Gmin = 2.70769e-13
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
 
-Date: Fri Apr 19 11:01:19 2024
-Total elapsed time: 0.076 seconds.
+
+Date: Fri Apr 19 18:54:53 2024
+Total elapsed time: 0.267 seconds.
 
 tnom = 27
 temp = 27
-method = trap
-totiter = 12
-traniter = 0
-tranpoints = 0
-accept = 0
+method = modified trap
+totiter = 2487
+traniter = 2084
+tranpoints = 1043
+accept = 1043
 rejected = 0
-matrix size = 46
-fillins = 2
+matrix size = 47
+fillins = 4
 solver = Normal
-Avg thread counts: 8.0/0.0/8.0/8.0
-Matrix Compiler1:     304 opcodes
-Matrix Compiler2: 5.07 KB object code size
+Avg thread counts: 2.3/3.6/3.6/2.3
+Matrix Compiler1: 6.04 KB object code size  2.2/1.2/[1.1]
+Matrix Compiler2: 5.18 KB object code size  2.6/2.9/[1.1]
+
