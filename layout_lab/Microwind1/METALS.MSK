@@ -1,0 +1,39 @@
+VERSION 30. 5.1996  14:38
+FIG #layout\metals.MSK
+BB(-9,2,68,80)
+REC(-5,4,56,4,ME)
+REC(46,2,7,7,ME)
+REC(48,4,3,3,VI)
+REC(46,2,7,7,M2)
+REC(47,9,5,20,M2)
+REC(46,28,9,9,M2)
+REC(49,31,3,3,V2)
+REC(46,28,9,9,M3)
+REC(1,29,45,6,M3)
+REC(-9,24,16,16,M3)
+REC(-3,30,4,4,V3)
+REC(-9,24,16,16,M4)
+REC(-8,40,12,26,M4)
+REC(-9,64,16,16,M4)
+REC(-3,70,4,4,V4)
+REC(-9,64,16,16,M5)
+REC(7,68,61,10,M5)
+TITLE 5 6  #Metal1
+$- 1000 0 
+TITLE 49 19  #Metal2
+$- 1000 0 
+TITLE 52 6  #Via Metal1/Metal
+$- 1000 0 
+TITLE 49 35  #Via2 Metal2/Met3
+$- 1000 0 
+TITLE 19 32  #Metal3
+$- 1000 0 
+TITLE -3 39  #Via3 Metal3/Met4
+$- 1000 0 
+TITLE -3 48  #Metal4
+$- 1000 0 
+TITLE -5 78  #Via4 Metal4/Met5
+$- 1000 0 
+TITLE 27 74  #Metal5
+$- 1000 0 
+FFIG layout\metals.MSK

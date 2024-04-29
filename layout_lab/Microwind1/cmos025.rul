@@ -1,0 +1,207 @@
+MICROWIND 1.00
+*
+* Rule File for CMOS 0.25µm
+* Date : 18 Nov 97
+*
+* Status : preliminary
+*
+NAME CMOS 0.25µm - 5 Metal
+*
+lambda = 0.15     (Lambda is set to half the gate size)
+metalLayers = 5  (Number of metal layers : 5)
+*
+* Design rules associated to each layer
+*
+* Well 
+r101 = 10    (well width)
+r102 = 11    (well spacing)
+*
+* Diffusion 
+*
+r201 = 4     (diffusion width)
+r202 = 4     (diffusion spacing)
+r203 = 6     (border of nwell on diffp)
+r204 = 6     (nwell to next diffn)
+*
+* Poly 
+*
+r301 = 2     (poly width)
+r302 = 2     (ngate width)
+r303 = 2     (pgate width)
+r304 = 3     (poly spacing)
+r305 = 1     (spacing poly and unrelated diff)
+r306 = 4     (width of drain and source diff)
+r307 = 2     (extra gate poly)
+* Contact
+r401 = 2     (contact width)
+r402 = 3     (contact spacing)
+r403 = 2     (metal border for contact)
+r404 = 2     (poly border for contact)
+r405 = 2     (diff border for contact)
+*  metal
+r501 = 3    (metal width)
+r502 = 3    (metal spacing)
+*  via  
+r601 = 2    (Via width)
+r602 = 3    (Spacing)
+r604 = 2    (border of metal&metal2)
+*  metal 2 
+r701 = 4    (Metal 2 width)
+r702 = 4    (spacing)
+*  via 2 
+r801 = 2    (Via width)
+r802 = 3    (Spacing)
+r804 = 2    (border of metal2&metal3)
+*  metal 3 
+r901 = 4    (width)
+r902 = 4    (spacing)
+*  via 3 
+ra01 = 2    (Via width)
+ra02 = 3    (Spacing)
+ra04 = 2    (border of metal3&metal4)
+*  metal 4 
+rb01 = 4    (width)
+rb02 = 4    (spacing)
+*  via 4
+rc01 = 2    (Via width)
+rc02 = 3    (Spacing)
+rc04 = 2    (border of metal4&metal5)
+*  metal 5
+rd01 = 4    (width)
+rd02 = 10   (spacing)
+*
+* Passivation nitrideand pad rules
+*
+rp01 = 550 (Pad width)
+rp02 = 550  (Pad spacing)
+rp03 = 25   (Border of Vias)
+rp04 = 25   (Border of metals)
+rp05 = 150  (to unrelated active areas)
+*
+* Thickness of conductors for FEM computing and process aspect
+* All in µm
+*
+thpoly = 0.25
+hepoly = 0.4
+thme = 0.6
+heme = 1.0
+thm2 = 0.6
+hem2 = 2.5
+thm3 = 0.6
+hem3 = 4.0
+thm4 = 0.6
+hem4 = 6.0
+thm5 = 0.6
+hem5 = 7.5
+thpass = 0.5
+hepass = 8.0
+thnit = 0.5
+henit = 8.5
+*
+* Resistances
+* Unit is ohm/square
+*
+repo = 20
+reme = 0.5
+rem2 = 0.1
+rem3 = 0.1
+rem4 = 0.1
+rem5 = 0.1
+*
+*
+* Parasitic capacitances
+*
+cpoOxyde= 4600 (Surface capacitance Poly/Thin oxyde aF/µm2)
+cpobody = 80    (Poly/Body)
+cmebody = 28
+cmelineic = 42
+cmepoly = 60
+cm2body = 13
+cm2lineic = 36
+cm2poly = 16
+cm2metal = 38
+cm3body = 8
+cm3lineic = 33
+cm4body = 6
+cm4lineic = 30
+cm5body = 5
+cm5lineic = 31
+cmelineic = 42
+cgsn = 500          ( Gate/source capa of nMOS)
+cgsp = 500
+*
+* Crosstalk
+*
+cmextk = 52      (Lineic capacitance for crosstalk coupling in aF/µm)
+cm2xtk = 56      (C is computed using Cx=cmextk*l/spacing)
+cm3xtk = 56      (C is computed using Cx=cmextk*l/spacing)
+cm4xtk = 56      (C is computed using Cx=cmextk*l/spacing)
+cm5xtk = 56      (C is computed using Cx=cmextk*l/spacing)
+*
+* Junction capacitances
+*
+cdnpwell = 350   (n+/psub)
+cdpnwell = 300  (p+/nwell)
+cnwell = 250    (nwell/psub)
+cpwell = 100    (pwell/nsub)
+cldn = 300      (Lineic capacitance N+/P- aF/µm)
+cldp = 300      (Idem for P+/N-)
+*
+* Nmos Model 3 parameters
+*
+NMOS
+l3vto = 0.5
+l3vmax = 130e3
+l3gamma = 0.4
+l3theta = 0.3
+l3kappa = 0.01
+l3phi = 0.7
+l3ld = -0.05
+l3kp = 250e-6
+l3nss = 0.07
+*
+* Pmos Model 3
+*
+PMOS
+l3vto = -0.5
+l3vmax = 100e3
+l3gamma = 0.4
+l3theta = 0.3
+l3kappa = 0.01
+l3phi = 0.7
+l3ld = -0.05
+l3kp = 70e-6
+l3nss = 0.07
+*
+*
+* CIF&GDS2 Layers
+* MicroWind layer, CIF layer, Gds2 layer, overetch
+*
+cif nwell 1 1 0.0
+cif diffp 17 17 0.5
+cif diffn 16 16 0.5
+cif aarea 2 2 0.5
+cif poly 13 13 0.0
+cif contact 19 19 0.0
+cif metal 23 23 0.0
+cif via 25 25 0.0
+cif metal2 27 27 0.0
+cif via2 32 32 0.0
+cif metal3 24 34 0.0
+cif via3 35 35 0.0
+cif metal4 36 36 0.0
+cif via4 52 52 0.0
+cif metal5 53 53 0.0
+cif passiv 31 31 0.0
+cif text 53 53 0.0
+*
+*
+* MicroWind simulation parameters
+*
+deltaT = 2e-12   (Minimum simulation interval dT)
+vdd = 2.5
+temperature = 27
+*
+* End CMOS 0.25 µm
+*
+*

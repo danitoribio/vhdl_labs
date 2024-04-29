@@ -1,0 +1,11 @@
+// Etienne Sicard
+// Test Verilog with an half adder
+// Date : 11 July 97&
+
+module halfadd(sum,carry,a,b);
+  input a,b;
+  output sum,carry;
+
+  xor xor1(sum,a,b);
+  and and1(carry,a,b);
+endmodule

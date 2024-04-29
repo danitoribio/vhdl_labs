@@ -1,0 +1,41 @@
+VERSION 30. 5.1996  14: 9
+FIG #layout\contacts.MSK
+BB(-8,-7,80,40)
+REC(49,-7,6,6,DP)
+REC(23,-7,6,6,DN)
+REC(76,-5,2,2,CO)
+REC(51,-5,2,2,CO)
+REC(25,-5,2,2,CO)
+REC(74,-7,6,6,PO)
+REC(74,-7,6,6,ME)
+REC(49,-7,6,6,ME)
+REC(23,-7,6,6,ME)
+REC(-6,-7,7,7,ME)
+REC(-4,-5,3,3,VI)
+REC(-6,-7,7,7,M2)
+REC(-6,12,9,9,M2)
+REC(-3,15,3,3,V2)
+REC(62,11,16,16,M5)
+REC(22,11,16,16,M3)
+REC(-6,12,9,9,M3)
+REC(28,17,4,4,V3)
+REC(62,11,16,16,M4)
+REC(22,11,16,16,M4)
+REC(68,17,4,4,V4)
+TITLE 29 40  #contacts
+$- 1000 0 
+TITLE -7 26  #metal2/metal3
+$- 1000 0 
+TITLE -8 2  #metal/metal2
+$- 1000 0 
+TITLE 20 2  #metal/diffn
+$- 1000 0 
+TITLE 48 2  #metal/diffp
+$- 1000 0 
+TITLE 72 2  #metal/poly
+$- 1000 0 
+TITLE 62 31  #metal4/metal5
+$- 1000 0 
+TITLE 22 32  #metal3/metal4
+$- 1000 0 
+FFIG layout\contacts.MSK

@@ -1,0 +1,11 @@
+// Etienne Sicard
+// Test Verilog with a rs latch
+// Date : 11 July 97&
+
+module rslatch(q,nq,r,s)
+  input r,s;
+  output q,nq;
+
+  nand nand1(q,r,nq);
+  nand nand2(nq,q,s);
+endmodule

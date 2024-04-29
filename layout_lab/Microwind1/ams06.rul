@@ -1,0 +1,157 @@
+MICROWIND v1.00
+*
+* Rule file for 
+* AMS 0.6 µm
+* CMOS 2-metal
+*
+* 19 Dec 97
+*
+NAME AMS 0.6µm - 2 Metal
+*
+lambda = 0.3     (Lambda is set to half the lithography)
+metalLayers = 2  (Number of metal layers : 5)
+*
+* Design rules associated to each layer
+*
+* Well
+r101 = 10    (well width)
+r102 = 16    (well spacing)
+*
+* Diffusion
+*
+r201 = 3     (diffusion width)
+r202 = 4     (diffusion spacing)
+r203 = 6     (border of nwell on diffp)
+r204 = 6     (nwell to next diffn)
+r205 = 5     (diffn to diffp)
+* Poly
+r301 = 2     (poly width)
+r302 = 2     (ngate width)
+r303 = 2     (pgate width)
+r304 = 3     (poly spacing)
+r305 = 1     (spacing poly and unrelated diff)
+r306 = 4     (width of drain and source diff)
+r307 = 2     (extra gate poly)
+* Contact
+r401 = 2     (contact width)
+r402 = 3     (contact spacing)
+r403 = 2     (metal border for contact)
+r404 = 2     (poly border for contact)
+r405 = 2     (diff border for contact)
+* Metal
+r501 = 3    (metal width)
+r502 = 3    (metal spacing)
+* Via
+r601 = 3    (Via width)
+r602 = 3    (Spacing)
+r603 = 3    (To unrelated contact)
+r604 = 2    (border of metal&metal2)
+*   metal 2
+r701 = 3    (Metal 2 width)
+r702 = 3    (spacing)
+*
+* Pads
+*
+rp01 = 335 (Pad width)
+rp02 = 335  (Pad spacing)
+rp03 = 10   (Border of Via for passivation )
+rp04 = 23   (Border of metals)
+rp05 = 62   (to unrelated active areas)
+*
+*
+* Thickness of layers
+*
+thpoly = 0.25
+hepoly = 0.4
+thme = 0.7
+heme = 1.1
+thm2 = 1.0
+hem2 = 2.5
+thpass = 0.5
+hepass = 3.0
+thnit = 0.5
+henit = 3.5
+*
+* Resistance (ohm / square)
+*
+repo = 30
+reme = 0.1
+rem2 = 0.040
+*
+* Parasitic capacitances
+*
+cpoOxyde = 2800 (Surface capacitance Poly/Thin oxyde aF/µm2)
+cpobody = 53    (Poly/Body)
+cmebody = 40
+cmelineic = 20   (aF/µm)
+cmepoly = 52
+cm2body = 56
+cm2lineic = 20  (aF/µm)
+cm2poly = 20
+cm2metal = 50
+*
+* Crosstalk
+*
+cmextk = 120      (Lineic capacitance for crosstalk coupling in aF/µm/µm)
+cm2xtk = 150      (C is computed using Cx=cmextk*l/spacing)
+*
+* Junction capacitances
+*
+cdnpwell = 350   (n+/psub)
+cdpnwell = 400  (p+/nwell)
+cnwell = 100    (nwell/psub)
+cpwell = 100    (pwell/nsub)
+cldn = 300      (Lineic capacitance N+/P- aF/æm)
+cldp = 300      (Idem for P+/N-)
+*
+* Nmos Model 3 parameters
+*
+NMOS
+l3vto = 0.8
+l3vmax = 130e3
+l3gamma = 0.7
+l3theta = 0.2
+l3kappa = 0.01
+l3phi = 0.7
+l3ld = 0.01
+l3kp = 140e-6
+l3nss = 0.07
+l3cgd = 300
+*
+* Pmos Model 3
+*
+PMOS
+l3vto = -0.9
+l3vmax = 100e3
+l3gamma = 0.45
+l3theta = 0.2
+l3kappa = 0.04
+l3phi = 0.7
+l3ld = -0.05
+l3kp = 42e-6
+l3nss = 0.07
+l3cgd = 300
+*
+* MicroWind simulation parameters
+*
+deltaT = 5.0e-12   (Minimum simulation interval dT)
+vdd = 5.0
+temperature = 27
+*
+* CIF&GDS2
+* MicroWind name, Cif name, Gds2 n°, overetch for final translation
+*
+cif nwell NTUB 1 0.0
+cif aarea DIFF 4 0.0
+cif poly POLY1 10 0.0
+cif diffn DIFF 4 0.0
+cif diffp PPLUS 13 0.2
+cif contact CONT 16 0.0
+cif metal MET1 17 0.0
+cif via VIA 18 0.05
+cif metal2 MET2 19 0.0
+cif passiv PAD 20 0.0
+cif text text 0 0.0
+*
+* End Ams 0.6µm
+*

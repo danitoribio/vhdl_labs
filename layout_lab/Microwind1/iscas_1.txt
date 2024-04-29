@@ -1,0 +1,25 @@
+
+// Verilog description of Iscas'85 c17.isc file
+
+module c17 (23gat,22gat,7gat,6gat,3gat,2gat,1gat) ;
+input 7gat;
+input 6gat;
+input 3gat;
+input 2gat;
+input 1gat;	
+output 23gat;
+output 22gat;
+wire 19gat;
+wire 16gat;
+wire 11gat;
+wire w1;
+
+     nand isc_g0 (w1,1gat,3gat);
+     nand isc_g1 (11gat,3gat,6gat);
+nand isc_g2 (16gat,2gat,11gat);
+nand isc_g3 (19gat,11gat,7gat);
+nand isc_g4 (22gat,w1,16gat);
+nand isc_g5 (23gat,16gat,19gat);
+endmodule
+
+
