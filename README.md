@@ -1,0 +1,1 @@
+Implementation of a FIR filter and a sine generator with VHDL. There is also a laboratory about analog circuits with MOSFET transistors and another laboratory with the design of a ring counter in microelectronics.
